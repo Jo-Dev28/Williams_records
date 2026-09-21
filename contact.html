@@ -3,123 +3,1120 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Us - Williams Studios</title>
+    <title>Contact Us - Williams Records</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
-    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" href="will.jpg">
     <style>
-        .contact-hero {
-            background: linear-gradient(135deg, var(--secondary), #2575fc);
+        :root {
+            --secondary: #E67E22;
+            --accent: #F1C40F;
+            --dark: #1E1E2F;
+            --light: #FDF8F3;
+            --text: #2D2A24;
+            --text-light: #FFF9F0;
+            --bg-color: #FDF8F3;
+            --card-bg: #FFFFFF;
+            --header-bg: linear-gradient(145deg, #FFFFFF 0%, #FEF6E8 100%);
+            --transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            --shadow-sm: 0 4px 10px rgba(230, 126, 34, 0.08);
+            --shadow-md: 0 8px 20px rgba(230, 126, 34, 0.12);
+            --border-radius: 20px;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #1A1815;
+            --text: #F5EDE4;
+            --light: #2A2724;
+            --card-bg: #2E2B28;
+            --header-bg: linear-gradient(145deg, #2A2724 0%, #1F1D1A 100%);
+            --shadow-sm: 0 4px 10px rgba(0, 0, 0, 0.3);
+            --shadow-md: 0 8px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', 'Segoe UI', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text);
+            overflow-x: hidden;
+            transition: var(--transition);
+            line-height: 1.6;
+            font-size: 15px;
+        }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            position: fixed;
+            bottom: 130px;
+            right: 28px;
+            background: var(--secondary);
+            color: #1E1E2F;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.1rem;
+            box-shadow: var(--shadow-sm);
+            z-index: 999;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+        }
+        .theme-toggle:hover { transform: scale(1.1) rotate(15deg); background: var(--accent); }
+
+        /* Header */
+        header {
+            background: var(--header-bg);
+            padding: 0.7rem 1.5rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            border-bottom: 2px solid var(--secondary);
+        }
+
+        .header-scroll {
+            padding: 0.4rem 1.5rem;
+            background: rgba(255, 248, 240, 0.96);
+            backdrop-filter: blur(12px);
+        }
+        [data-theme="dark"] .header-scroll { background: rgba(42, 39, 36, 0.96); }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.4rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            letter-spacing: -0.3px;
+        }
+
+        .logo i {
+            margin-right: 8px;
+            background: linear-gradient(135deg, var(--secondary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 1.6rem;
+        }
+
+        .logo span {
+            background: linear-gradient(135deg, var(--secondary), #D35400);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 0.3rem;
+            background: rgba(230, 126, 34, 0.08);
+            padding: 0.3rem 0.8rem;
+            border-radius: 50px;
+            backdrop-filter: blur(4px);
+        }
+
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.8rem;
+            padding: 0.4rem 0.9rem;
+            border-radius: 40px;
+            transition: var(--transition);
+            display: inline-block;
+        }
+
+        .nav-links a:hover {
+            background: rgba(230, 126, 34, 0.15);
+            color: var(--secondary);
+            transform: translateY(-1px);
+        }
+
+        .nav-links a.active {
+            background: var(--secondary);
             color: white;
-            padding: 8rem 2rem 4rem;
-            text-align: center;
-            margin-top: 80px;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 10px rgba(230, 126, 34, 0.3);
         }
 
-        .contact-info-grid {
+        .menu-btn {
+            display: none;
+            font-size: 1.4rem;
+            cursor: pointer;
+            color: var(--secondary);
+        }
+
+        /* Floating buttons */
+        .whatsapp-btn {
+            text-decoration: none;
+            position: fixed;
+            bottom: 25px; right: 25px;
+            background: #25D366; color: white;
+            width: 42px; height: 42px;
+            border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            font-size: 1.6rem;
+            box-shadow: 0 6px 14px rgba(37, 211, 102, 0.3);
+            z-index: 999;
+            transition: var(--transition);
+            animation: pulse 2s infinite;
+        }
+        .whatsapp-btn:hover { transform: scale(1.1); }
+
+        .call-btn {
+            text-decoration: none;
+            position: fixed;
+            bottom: 75px; right: 27px;
+            background: var(--secondary); color: white;
+            width: 36px; height: 36px;
+            border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            font-size: 1.2rem;
+            box-shadow: var(--shadow-sm);
+            z-index: 999;
+            transition: var(--transition);
+        }
+        .call-btn:hover { transform: scale(1.1); background: var(--accent); color: #1E1E2F; }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
+            70% { box-shadow: 0 0 0 12px rgba(37, 211, 102, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+        }
+
+        /* ===== HERO - COMPACT EDITORIAL ===== */
+        .contact-hero {
+            padding: 5rem 1.5rem 2rem;
+            margin-top: 1px;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, #E67E22 0%, #D35400 100%);
+            color: #FFF9F0;
+            min-height: 300px;
+            display: flex;
+            align-items: center;
+        }
+
+        .contact-hero::before {
+            content: '';
+            position: absolute;
+            top: -80px; right: -80px;
+            width: 280px; height: 280px;
+            background: rgba(241, 196, 15, 0.15);
+            border-radius: 50%;
+        }
+
+        .contact-hero::after {
+            content: '';
+            position: absolute;
+            bottom: -100px; left: -60px;
+            width: 240px; height: 240px;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 50%;
+        }
+
+        .contact-hero-inner {
+            max-width: 1150px;
+            margin: 0 auto;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: 1.6fr 1fr;
             gap: 2rem;
-            margin: 3rem 0;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+            width: 100%;
         }
 
-        .contact-info-card {
-            background: var(--card-bg);
-            padding: 2rem;
-            border-radius: 10px;
+        .contact-hero-text .tag {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(6px);
+            color: var(--accent);
+            padding: 0.25rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.65rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            border: 1px solid rgba(241, 196, 15, 0.3);
+            margin-bottom: 0.6rem;
+        }
+
+        .contact-hero-text h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 0.6rem;
+            letter-spacing: -0.4px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .contact-hero-text h1 span { color: var(--accent); }
+
+        .contact-hero-text p {
+            font-size: 0.88rem;
+            opacity: 0.95;
+            max-width: 520px;
+        }
+
+        .contact-hero-icon {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .contact-hero-ring {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(241, 196, 15, 0.3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            animation: gentleFloat 4s ease-in-out infinite;
+        }
+
+        .contact-hero-ring i {
+            font-size: 3.2rem;
+            color: var(--accent);
+        }
+
+        .contact-hero-ring::before,
+        .contact-hero-ring::after {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+            border: 1px dashed rgba(241, 196, 15, 0.3);
+        }
+
+        .contact-hero-ring::before { width: 170px; height: 170px; }
+        .contact-hero-ring::after {
+            width: 200px; height: 200px;
+            border-style: dotted;
+            opacity: 0.5;
+        }
+
+        @keyframes gentleFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        /* Sections */
+        .section {
+            padding: 2.5rem 1.5rem;
+            max-width: 1150px;
+            margin: 0 auto;
+        }
+
+        .section-title {
             text-align: center;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 1.8rem;
+        }
+
+        .section-title h2 {
+            font-size: 1.9rem;
+            color: var(--secondary);
+            position: relative;
+            display: inline-block;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            width: 60%;
+            height: 3px;
+            background: linear-gradient(to right, var(--secondary), var(--accent));
+            bottom: -8px;
+            left: 20%;
+            border-radius: 4px;
+        }
+
+        .section-title p {
+            color: var(--text);
+            max-width: 600px;
+            margin: 0.8rem auto 0;
+            opacity: 0.85;
+            font-size: 0.9rem;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            background: var(--secondary);
+            color: white;
+            padding: 0.55rem 1.4rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.85rem;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(230, 126, 34, 0.25);
+            letter-spacing: 0.2px;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            background: var(--accent);
+            color: #1E1E2F;
+            box-shadow: 0 6px 16px rgba(241, 196, 15, 0.3);
+        }
+
+        .btn-ghost {
+            background: transparent;
+            border: 2px solid var(--secondary);
+            color: var(--secondary);
+            box-shadow: none;
+        }
+        .btn-ghost:hover {
+            background: var(--secondary);
+            color: white;
+        }
+
+        /* ===== QUICK CONTACT CARDS ===== */
+        .quick-cards {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.2rem;
+            margin-top: 0.5rem;
+        }
+
+        .quick-card {
+            background: var(--card-bg);
+            border-radius: 18px;
+            padding: 1.5rem 1.3rem;
+            text-align: center;
+            border: 1px solid rgba(230, 126, 34, 0.1);
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quick-card::before {
+            content: '';
+            position: absolute;
+            top: -30px; right: -30px;
+            width: 90px; height: 90px;
+            background: linear-gradient(135deg, rgba(230,126,34,0.12), rgba(241,196,15,0.08));
+            border-radius: 50%;
+        }
+
+        .quick-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--accent);
+        }
+
+        .quick-card-icon {
+            width: 52px; height: 52px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, rgba(230,126,34,0.12), rgba(241,196,15,0.12));
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 0.9rem;
+            border: 1px solid rgba(230, 126, 34, 0.15);
+            color: var(--secondary);
+            font-size: 1.3rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .quick-card h3 {
+            font-size: 1rem;
+            color: var(--secondary);
+            margin-bottom: 0.4rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .quick-card p {
+            font-size: 0.78rem;
+            opacity: 0.85;
+            margin-bottom: 0.9rem;
+            line-height: 1.55;
+            position: relative;
+            z-index: 1;
+        }
+
+        .quick-card .quick-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--secondary);
+            text-decoration: none;
+            transition: var(--transition);
+            position: relative;
+            z-index: 1;
+        }
+
+        .quick-card .quick-link:hover {
+            color: var(--accent);
+            gap: 0.55rem;
+        }
+
+        /* ===== MAIN CONTACT BLOCK ===== */
+        .contact-main {
+            display: grid;
+            grid-template-columns: 1fr 1.3fr;
+            gap: 2rem;
+            margin-top: 1.5rem;
+        }
+
+        .contact-info-panel {
+            background: linear-gradient(145deg, #E67E22, #D35400);
+            color: #FFF9F0;
+            border-radius: var(--border-radius);
+            padding: 2rem 1.8rem;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .contact-info-panel::before {
+            content: '';
+            position: absolute;
+            top: -60px; right: -60px;
+            width: 220px; height: 220px;
+            background: rgba(241, 196, 15, 0.18);
+            border-radius: 50%;
+        }
+
+        .contact-info-panel::after {
+            content: '';
+            position: absolute;
+            bottom: -80px; left: -50px;
+            width: 200px; height: 200px;
+            background: rgba(255, 255, 255, 0.07);
+            border-radius: 50%;
+        }
+
+        .contact-info-panel-inner {
+            position: relative;
+            z-index: 1;
+        }
+
+        .contact-info-panel .eyebrow {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(6px);
+            color: var(--accent);
+            padding: 0.25rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.65rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            border: 1px solid rgba(241, 196, 15, 0.35);
+            margin-bottom: 0.9rem;
+        }
+
+        .contact-info-panel h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            line-height: 1.25;
+        }
+
+        .contact-info-panel > p,
+        .contact-info-panel-inner > p {
+            font-size: 0.85rem;
+            opacity: 0.92;
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+        }
+
+        .info-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.9rem;
+        }
+
+        .info-item-icon {
+            width: 38px; height: 38px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(6px);
+            display: flex; align-items: center; justify-content: center;
+            color: var(--accent);
+            font-size: 0.9rem;
+            flex-shrink: 0;
+            border: 1px solid rgba(255, 215, 120, 0.3);
+        }
+
+        .info-item-text h5 {
+            font-size: 0.7rem;
+            color: var(--accent);
+            margin-bottom: 0.15rem;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            font-weight: 600;
+        }
+
+        .info-item-text p {
+            font-size: 0.85rem;
+            color: #FFF9F0;
+            line-height: 1.5;
+        }
+
+        .info-item-text a {
+            color: #FFF9F0;
+            text-decoration: none;
             transition: var(--transition);
         }
 
-        .contact-info-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        .info-item-text a:hover { color: var(--accent); }
+
+        .hours-mini {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(8px);
+            border-radius: 14px;
+            padding: 0.9rem 1rem;
+            border: 1px solid rgba(255, 215, 120, 0.25);
+            margin-bottom: 1.5rem;
         }
 
-        .contact-info-card i {
-            font-size: 2.5rem;
+        .hours-mini h5 {
+            font-size: 0.7rem;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            margin-bottom: 0.6rem;
+            font-weight: 600;
+        }
+
+        .hours-mini-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.78rem;
+            padding: 0.25rem 0;
+            color: rgba(255, 249, 240, 0.9);
+        }
+
+        .contact-info-panel .social-row {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: auto;
+        }
+
+        .contact-info-panel .social-row a {
+            color: #FFF9F0;
+            background: rgba(255, 255, 255, 0.12);
+            width: 36px; height: 36px;
+            border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            transition: var(--transition);
+            font-size: 0.9rem;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            text-decoration: none;
+        }
+
+        .contact-info-panel .social-row a:hover {
+            background: var(--accent);
+            color: #1E1E2F;
+            transform: translateY(-3px);
+            border-color: var(--accent);
+        }
+
+        /* ===== FORM PANEL ===== */
+        .contact-form-panel {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 2rem 1.8rem;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid rgba(230, 126, 34, 0.08);
+        }
+
+        .contact-form-panel h3 {
+            font-size: 1.35rem;
             color: var(--secondary);
+            margin-bottom: 0.4rem;
+        }
+
+        .contact-form-panel > p {
+            font-size: 0.83rem;
+            opacity: 0.82;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.8rem;
+        }
+
+        .form-group {
+            margin-bottom: 0.9rem;
+        }
+
+        .form-group label {
+            font-size: 0.76rem;
+            margin-bottom: 0.3rem;
+            display: block;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            background: var(--bg-color);
+            border: 1px solid rgba(230, 126, 34, 0.2);
+            color: var(--text);
+            padding: 0.6rem 0.85rem;
+            font-size: 0.83rem;
+            width: 100%;
+            border-radius: 10px;
+            transition: var(--transition);
+            font-family: inherit;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            border-color: var(--secondary);
+            box-shadow: 0 0 0 3px rgba(230, 126, 34, 0.12);
+            outline: none;
+        }
+
+        .form-group textarea {
+            min-height: 90px;
+            resize: vertical;
+        }
+
+        .form-checkbox {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.55rem;
             margin-bottom: 1rem;
         }
 
-        .map-container {
-            margin-top: 3rem;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        .form-checkbox input {
+            width: auto;
+            margin-top: 3px;
+            accent-color: var(--secondary);
+            cursor: pointer;
         }
 
-        .business-hours {
-            background: var(--light);
-            padding: 2rem;
-            border-radius: 10px;
-            margin-top: 2rem;
+        .form-checkbox label {
+            font-size: 0.72rem;
+            margin-bottom: 0;
+            opacity: 0.85;
+            font-weight: 400;
+            cursor: pointer;
         }
 
-        .hours-list {
-            list-style: none;
-            margin-top: 1rem;
-        }
-
-        .hours-list li {
-            display: flex;
-            justify-content: space-between;
-            padding: 0.8rem 0;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-        }
-
-        .hours-list li:last-child {
-            border-bottom: none;
-        }
-
-        /* Date and Time Form Styles */
-        .form-group input[type="date"] {
+        .contact-form-panel .btn {
             width: 100%;
-            padding: 0.8rem;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 1rem;
+            padding: 0.7rem 1rem;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        /* ===== MAP ===== */
+        .map-wrap {
+            margin-top: 2rem;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid rgba(230, 126, 34, 0.1);
+        }
+
+        .map-wrap iframe {
+            width: 100%;
+            height: 380px;
+            border: 0;
+            display: block;
+        }
+
+        /* ===== QUICK ACTIONS BAND ===== */
+        .quick-actions {
+            background: linear-gradient(135deg, #E67E22 0%, #D35400 100%);
+            color: #FFF9F0;
+            text-align: center;
+            padding: 2.5rem 1.5rem;
+            max-width: 1150px;
+            margin: 0 auto 2rem;
+            border-radius: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quick-actions::before {
+            content: '';
+            position: absolute;
+            top: -80px; right: -80px;
+            width: 280px; height: 280px;
+            background: rgba(241, 196, 15, 0.15);
+            border-radius: 50%;
+        }
+
+        .quick-actions::after {
+            content: '';
+            position: absolute;
+            bottom: -100px; left: -60px;
+            width: 240px; height: 240px;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 50%;
+        }
+
+        .quick-actions-inner { position: relative; z-index: 1; }
+
+        .quick-actions h2 {
+            font-size: 1.6rem;
+            font-weight: 800;
+            margin-bottom: 0.4rem;
+        }
+
+        .quick-actions p {
+            font-size: 0.85rem;
+            opacity: 0.95;
+            margin-bottom: 1.6rem;
+        }
+
+        .quick-action-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.8rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .quick-action-btn {
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 215, 120, 0.3);
+            color: #FFF9F0;
+            border-radius: 14px;
+            padding: 1rem 0.8rem;
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
             transition: var(--transition);
-            background-color: var(--light);
-            color: var(--text);
-            font-family: 'Poppins', sans-serif;
         }
 
-        .form-group input[type="date"]:focus {
+        .quick-action-btn i {
+            font-size: 1.3rem;
+            color: var(--accent);
+        }
+
+        .quick-action-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-4px);
+            border-color: var(--accent);
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: var(--dark);
+            color: #F5EDE4;
+            padding: 3rem 1.5rem 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 4px;
+            background: linear-gradient(to right, var(--secondary), var(--accent), var(--secondary));
+        }
+
+        .footer-content {
+            max-width: 1150px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr 1.2fr;
+            gap: 2rem;
+        }
+
+        .footer-brand { display: flex; flex-direction: column; gap: 1rem; }
+
+        .footer-brand .logo {
+            font-size: 1.3rem;
+            color: #F5EDE4;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer-brand .logo i { color: var(--secondary); font-size: 1.5rem; }
+        .footer-brand .logo span {
+            background: linear-gradient(135deg, var(--secondary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .footer-brand p { font-size: 0.8rem; opacity: 0.75; line-height: 1.6; }
+
+        .footer-social { display: flex; gap: 0.5rem; margin-top: 0.5rem; }
+
+        .footer-social a {
+            color: #F5EDE4;
+            background: rgba(255, 255, 255, 0.07);
+            width: 34px; height: 34px;
+            border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            transition: var(--transition);
+            font-size: 0.85rem;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .footer-social a:hover {
+            background: var(--secondary);
+            color: white;
+            transform: translateY(-3px);
             border-color: var(--secondary);
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(106, 17, 203, 0.1);
         }
 
-        .checkbox-group {
+        .footer-col h4 {
+            font-size: 1rem;
+            margin-bottom: 1.2rem;
+            color: #F5EDE4;
+            position: relative;
+            padding-bottom: 0.6rem;
+        }
+
+        .footer-col h4::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0;
+            width: 30px; height: 2px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        .footer-col ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+
+        .footer-col ul li a {
+            color: #F5EDE4;
+            text-decoration: none;
+            font-size: 0.82rem;
+            opacity: 0.75;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .footer-col ul li a i { font-size: 0.6rem; color: var(--accent); transition: var(--transition); }
+        .footer-col ul li a:hover { opacity: 1; color: var(--secondary); transform: translateX(4px); }
+
+        .footer-contact-item {
             display: flex;
             align-items: flex-start;
-            gap: 10px;
+            gap: 0.7rem;
+            margin-bottom: 0.9rem;
         }
 
-        .checkbox-group input[type="checkbox"] {
-            margin-top: 5px;
-            transform: scale(1.2);
+        .footer-contact-item i { color: var(--accent); font-size: 0.9rem; margin-top: 3px; }
+        .footer-contact-item span { font-size: 0.82rem; opacity: 0.8; line-height: 1.5; }
+
+        .footer-bottom {
+            max-width: 1150px;
+            margin: 2.5rem auto 0;
+            padding-top: 1.2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
         }
 
-        .checkbox-group label {
-            font-size: 0.9rem;
-            line-height: 1.4;
-            margin-bottom: 0;
-            color: var(--text);
+        .footer-bottom p { font-size: 0.75rem; opacity: 0.6; }
+
+        .dev-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(230, 126, 34, 0.15);
+            color: var(--secondary);
+            text-decoration: none;
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 0.3rem 0.8rem;
+            border-radius: 30px;
+            border: 1px solid rgba(230, 126, 34, 0.3);
+            transition: var(--transition);
+        }
+        .dev-btn:hover {
+            background: var(--secondary);
+            color: white;
+            transform: translateY(-2px);
+            border-color: var(--secondary);
+        }
+        .dev-btn i { font-size: 0.6rem; }
+
+        /* Animations */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(25px);
+            transition: var(--transition);
+        }
+        .animate-on-scroll.animated {
+            opacity: 1;
+            transform: translateY(0);
         }
 
-        /* Responsive adjustments */
+        /* Responsive */
+        @media (max-width: 992px) {
+            .contact-hero-inner { grid-template-columns: 1fr; }
+            .contact-hero-icon { display: none; }
+            .contact-hero-text h1 { font-size: 1.8rem; }
+            .quick-cards { grid-template-columns: repeat(2, 1fr); }
+            .contact-main { grid-template-columns: 1fr; }
+            .quick-action-grid { grid-template-columns: repeat(2, 1fr); }
+            .footer-content { grid-template-columns: 1fr 1fr; }
+        }
+
         @media (max-width: 768px) {
-            .checkbox-group {
-                align-items: flex-start;
-            }
-            
-            .checkbox-group label {
-                font-size: 0.85rem;
+            .menu-btn { display: block; }
+
+            /* ===== MOBILE NAV MENU ===== */
+            .nav-links {
+                position: fixed;
+                top: 60px;
+                left: -100%;
+                background: #FFF9F0;
+                width: 100%;
+                height: calc(100vh - 60px);
+                flex-direction: column;
                 align-items: center;
+                padding: 1.5rem 1rem;
+                transition: var(--transition);
+                border-radius: 0;
+                box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+                gap: 0.4rem;
+                z-index: 999;
+                overflow-y: auto;
             }
+
+            [data-theme="dark"] .nav-links {
+                background: #1F1D1A;
+            }
+
+            .nav-links.active { left: 0; }
+
+            /* Base mobile link */
+            .nav-links a {
+                display: block;
+                width: 100%;
+                max-width: 320px;
+                text-align: center;
+                padding: 0.75rem 1rem;
+                font-size: 0.95rem;
+                font-weight: 600;
+                color: #2D2A24;
+                background: transparent;
+                border-radius: 12px;
+                transition: all 0.25s ease;
+                transform: none;
+                box-shadow: none;
+            }
+
+            [data-theme="dark"] .nav-links a {
+                color: #F5EDE4;
+            }
+
+            /* Hover — soft tint only */
+            .nav-links a:hover {
+                background: rgba(230, 126, 34, 0.12);
+                color: var(--secondary);
+                transform: none;
+            }
+
+            [data-theme="dark"] .nav-links a:hover {
+                background: rgba(230, 126, 34, 0.18);
+                color: var(--secondary);
+            }
+
+            /* Active page — solid orange pill */
+            .nav-links a.active {
+                background: var(--secondary);
+                color: #FFFFFF;
+                box-shadow: 0 6px 16px rgba(230, 126, 34, 0.35);
+            }
+
+            .nav-links a.active:hover {
+                background: var(--secondary);
+                color: #FFFFFF;
+            }
+
+            /* Hide any desktop underline pseudo-element */
+            .nav-links a::after {
+                display: none;
+            }
+
+            .contact-hero { padding: 4.5rem 1.2rem 1.5rem; min-height: 300px; }
+            .contact-hero-text h1 { font-size: 1.6rem; }
+            .contact-hero-text p { font-size: 0.85rem; }
+
+            .section { padding: 2rem 1rem; }
+            .section-title h2 { font-size: 1.6rem; }
+
+            .quick-cards { grid-template-columns: repeat(2, 1fr); gap: 0.9rem; }
+            .quick-card { padding: 1.2rem 1rem; }
+
+            .contact-info-panel,
+            .contact-form-panel { padding: 1.6rem 1.4rem; }
+
+            .form-row { grid-template-columns: 1fr; }
+
+            .quick-actions h2 { font-size: 1.4rem; }
+            .quick-action-grid { grid-template-columns: repeat(2, 1fr); }
+
+            .footer-content { grid-template-columns: 1fr; gap: 1.5rem; }
+            .footer-bottom { flex-direction: column; text-align: center; }
+        }
+
+        @media (max-width: 480px) {
+            .contact-hero-text h1 { font-size: 1.4rem; }
+            .quick-cards { grid-template-columns: 1fr; }
+            .quick-action-grid { grid-template-columns: 1fr; }
+            .map-wrap iframe { height: 280px; }
+            .btn { padding: 0.45rem 1rem; font-size: 0.75rem; }
         }
     </style>
 </head>
@@ -144,7 +1141,7 @@
         <div class="navbar">
             <div class="logo">
                 <i class="fas fa-headphones"></i>
-                <span>Williams Studios</span>
+                <span>Williams Records Af</span>
             </div>
             <div class="menu-btn">
                 <i class="fas fa-bars"></i>
@@ -152,345 +1149,362 @@
             <ul class="nav-links">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="services.html">Services</a></li>
-                <!-- <li><a href="electronics.html">Electronics</a></li> -->
                 <li><a href="gallery.html">Gallery</a></li>
-                <li><a href="about.html">About Us</a></li>
-                <li><a href="team.html">Our Team</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="team.html">Team</a></li>
                 <li><a href="contact.html" class="active">Contact</a></li>
             </ul>
         </div>
     </header>
 
-    <!-- Contact Hero -->
+    <!-- ===== HERO - COMPACT EDITORIAL ===== -->
     <section class="contact-hero">
-        <h1>Get In Touch</h1>
-        <p>Ready to start your next project? Contact us today and let's create something amazing together</p>
+        <div class="contact-hero-inner">
+            <div class="contact-hero-text">
+                <span class="tag">Contact Us</span>
+                <h1>Let's Create <span>Together</span>.</h1>
+                <p>Ready to start your next project? Reach out and let's turn your idea into something remarkable — from recording and photography to full video production.</p>
+            </div>
+            <div class="contact-hero-icon">
+                <div class="contact-hero-ring">
+                    <i class="fas fa-paper-plane"></i>
+                </div>
+            </div>
+        </div>
     </section>
 
-    <!-- Contact Section -->
+    <!-- ===== QUICK CONTACT CARDS ===== -->
     <section class="section">
         <div class="section-title">
-            <h2>Contact Williams Studios</h2>
-            <p>We're here to help bring your creative vision to life</p>
+            <h2>Reach Us Anytime</h2>
+            <p>Multiple ways to connect with the studio</p>
         </div>
-
-        <!-- Contact Info Cards -->
-        <div class="contact-info-grid">
-            <div class="contact-info-card animate-on-scroll">
-                <i class="fas fa-map-marker-alt"></i>
-                <h3>Visit Our Studio</h3>
-                <p>Gichagi<br>Bridge International Academy<br>Nairobi, Kenya</p>
+        <div class="quick-cards">
+            <div class="quick-card animate-on-scroll">
+                <div class="quick-card-icon"><i class="fas fa-map-marker-alt"></i></div>
+                <h3>Visit Studio</h3>
+                <p>Gichagi, Bridge International Academy, Nairobi</p>
+                <a href="#map" class="quick-link">View Map <i class="fas fa-arrow-right"></i></a>
             </div>
-            <div class="contact-info-card animate-on-scroll">
-                <i class="fas fa-phone-alt"></i>
+            <div class="quick-card animate-on-scroll">
+                <div class="quick-card-icon"><i class="fas fa-phone-alt"></i></div>
                 <h3>Call Us</h3>
                 <p>+254 792-347-505<br>+254 745-342-734</p>
-                <a href="tel:+254792347505" class="btn" style="margin-top: 1rem;">Call Now</a>
+                <a href="tel:+254792347505" class="quick-link">Call Now <i class="fas fa-arrow-right"></i></a>
             </div>
-            <div class="contact-info-card animate-on-scroll">
-                <i class="fas fa-envelope"></i>
+            <div class="quick-card animate-on-scroll">
+                <div class="quick-card-icon"><i class="fas fa-envelope"></i></div>
                 <h3>Email Us</h3>
-                <p>danwilliams9930@gmail.com<br>info@williamsstudios.com</p>
-                <a href="mailto:danwilliams9930@gmail.com" class="btn" style="margin-top: 1rem;">Send Email</a>
+                <p>danwilliams9930@gmail.com</p>
+                <a href="mailto:danwilliams9930@gmail.com" class="quick-link">Send Email <i class="fas fa-arrow-right"></i></a>
             </div>
-            <div class="contact-info-card animate-on-scroll">
-                <i class="fab fa-whatsapp"></i>
+            <div class="quick-card animate-on-scroll">
+                <div class="quick-card-icon"><i class="fab fa-whatsapp"></i></div>
                 <h3>WhatsApp</h3>
-                <p>Quick responses<br>File sharing available</p>
-                <a href="https://wa.me/+254745342734" class="btn" style="margin-top: 1rem; background: #25D366;">Chat on WhatsApp</a>
+                <p>Quick replies, file sharing available</p>
+                <a href="https://wa.me/+254745342734" class="quick-link">Chat Now <i class="fas fa-arrow-right"></i></a>
             </div>
         </div>
+    </section>
 
-        <div class="contact-container">
-            <div class="contact-info animate-on-scroll">
-                <h3>Let's Start Your Project</h3>
-                <p>Whether you're recording your next hit single, planning a photoshoot, or need professional video production, we're here to make it happen.</p>
-                
-                <div class="business-hours">
-                    <h4>Business Hours</h4>
-                    <ul class="hours-list">
-                        <li>
-                            <span>Monday - Friday</span>
-                            <span>9:00 AM - 7:00 PM</span>
-                        </li>
-                        <li>
+    <!-- ===== MAIN CONTACT BLOCK ===== -->
+    <section class="section">
+        <div class="contact-main">
+            <!-- Left: Info Panel -->
+            <div class="contact-info-panel animate-on-scroll">
+                <div class="contact-info-panel-inner">
+                    <span class="eyebrow">Get In Touch</span>
+                    <h3>We'd Love to Hear From You</h3>
+                    <p>Whether you're recording a song, planning a photoshoot, or producing a full video, our team is ready to help bring your creative vision to life.</p>
+
+                    <div class="info-list">
+                        <div class="info-item">
+                            <div class="info-item-icon"><i class="fas fa-map-marker-alt"></i></div>
+                            <div class="info-item-text">
+                                <h5>Location</h5>
+                                <p>Gichagi, Bridge International Academy<br>Nairobi, Kenya</p>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-item-icon"><i class="fas fa-phone-alt"></i></div>
+                            <div class="info-item-text">
+                                <h5>Phone</h5>
+                                <p><a href="tel:+254792347505">+254 792-347-505</a><br><a href="tel:+254745342734">+254 745-342-734</a></p>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-item-icon"><i class="fas fa-envelope"></i></div>
+                            <div class="info-item-text">
+                                <h5>Email</h5>
+                                <p><a href="mailto:danwilliams9930@gmail.com">danwilliams9930@gmail.com</a></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="hours-mini">
+                        <h5>Business Hours</h5>
+                        <div class="hours-mini-row">
+                            <span>Monday – Friday</span>
+                            <span>9AM – 7PM</span>
+                        </div>
+                        <div class="hours-mini-row">
                             <span>Saturday</span>
-                            <span>10:00 AM - 4:00 PM</span>
-                        </li>
-                        <li>
+                            <span>10AM – 4PM</span>
+                        </div>
+                        <div class="hours-mini-row">
                             <span>Sunday</span>
                             <span>Closed</span>
-                        </li>
-                    </ul>
-                </div>
+                        </div>
+                    </div>
 
-                <div class="social-links" style="margin-top: 2rem;">
-                    <h4>Follow Us</h4>
-                    <div style="display: flex; gap: 1rem; margin-top: 1rem;">
-                        <a href="https://www.instagram.com/williams_on_the_beat?igsh=aGJueDVmMGozd2Ni" class="social-links"><i class="fab fa-facebook-f"></i></a>
-                        <a href="https://www.instagram.com/williams_on_the_beat?igsh=aGJueDVmMGozd2Ni" class="social-links"><i class="fab fa-instagram"></i></a>
-                        <a href="http://tiktok.com/@williams_on_the_beat" class="social-links"><i class="fab fa-tiktok"></i></a>
-                        <a href="https://youtube.com/@officialwilliamsrecords?si=HROc-WbH38rg9fkC" class="social-links"><i class="fab fa-youtube"></i></a>
+                    <div class="social-row">
+                        <a href="https://www.instagram.com/williams_on_the_beat" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.instagram.com/williams_on_the_beat" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="http://tiktok.com/@williams_on_the_beat" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                        <a href="https://youtube.com/@officialwilliamsrecords" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
                     </div>
                 </div>
             </div>
 
-            <div class="contact-form animate-on-scroll">
-                <h3 style="margin-bottom: 1.5rem;">Send Us a Message</h3>
+            <!-- Right: Form Panel -->
+            <div class="contact-form-panel animate-on-scroll">
+                <h3>Send Us a Message</h3>
+                <p>Fill out the form below and we'll get back to you within 24 hours.</p>
+
                 <form id="contactForm" action="https://formspree.io/f/xgvzragg" method="POST">
-                    <div class="form-group">
-                        <label for="name">Your Name *</label>
-                        <input type="text" id="name" name="name" placeholder="Enter your full name" required>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="name">Your Name *</label>
+                            <input type="text" id="name" name="name" placeholder="Full name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" name="email" placeholder="Email address">
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="email">Email Address </label>
-                        <input type="email" id="email" name="email" placeholder="Enter a valid email address" >
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="phone">Phone Number *</label>
+                            <input type="tel" id="phone" name="phone" placeholder="Phone number" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="service">Service *</label>
+                            <select id="service" name="service" required>
+                                <option value="">Select a service</option>
+                                <option value="music-recording">Music Recording</option>
+                                <option value="photography">Photography</option>
+                                <option value="video-clips">Video Production</option>
+                                <option value="wedding-filming">Wedding Filming</option>
+                                <option value="audio-mixing">Audio Mixing</option>
+                                <option value="live-events">Live Events</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="phone">Phone Number *</label>
-                        <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" required>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="preferred-date">Preferred Date *</label>
+                            <input type="date" id="preferred-date" name="preferred-date" min="" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="preferred-time">Preferred Time *</label>
+                            <select id="preferred-time" name="preferred-time" required>
+                                <option value="">Select a time slot</option>
+                                <option value="09:00-10:00">09:00 AM – 10:00 AM</option>
+                                <option value="10:00-11:00">10:00 AM – 11:00 AM</option>
+                                <option value="11:00-12:00">11:00 AM – 12:00 PM</option>
+                                <option value="12:00-13:00">12:00 PM – 01:00 PM</option>
+                                <option value="13:00-14:00">01:00 PM – 02:00 PM</option>
+                                <option value="14:00-15:00">02:00 PM – 03:00 PM</option>
+                                <option value="15:00-16:00">03:00 PM – 04:00 PM</option>
+                                <option value="16:00-17:00">04:00 PM – 05:00 PM</option>
+                                <option value="17:00-18:00">05:00 PM – 06:00 PM</option>
+                                <option value="18:00-19:00">06:00 PM – 07:00 PM</option>
+                            </select>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="service">Service Interested In *</label>
-                        <select id="service" name="service" required>
-                            <option value="">Select a service</option>
-                            <option value="music-recording">Music Recording</option>
-                            <option value="photography">Photography</option>
-                            <option value="video-clips">Video Production</option>
-                            <option value="wedding-filming">Wedding Filming</option>
-                            <option value="audio-mixing">Audio Mixing</option>
-                            <option value="live-events">Live Events</option>
-                            <!-- <option value="electronics">Electronics Purchase</option> -->
-                            <option value="other">Other</option>
-                        </select>
-                    </div>
-                    
-                    <!-- Date and Time Selection -->
-                    <div class="form-group">
-                        <label for="preferred-date">Preferred Date *</label>
-                        <input type="date" id="preferred-date" name="preferred-date" min="" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="preferred-time">Preferred Time *</label>
-                        <select id="preferred-time" name="preferred-time" required>
-                            <option value="">Select a time slot</option>
-                            <option value="09:00-10:00">09:00 AM - 10:00 AM</option>
-                            <option value="10:00-11:00">10:00 AM - 11:00 AM</option>
-                            <option value="11:00-12:00">11:00 AM - 12:00 PM</option>
-                            <option value="12:00-13:00">12:00 PM - 01:00 PM</option>
-                            <option value="13:00-14:00">01:00 PM - 02:00 PM</option>
-                            <option value="14:00-15:00">02:00 PM - 03:00 PM</option>
-                            <option value="15:00-16:00">03:00 PM - 04:00 PM</option>
-                            <option value="16:00-17:00">04:00 PM - 05:00 PM</option>
-                            <option value="17:00-18:00">05:00 PM - 06:00 PM</option>
-                            <option value="18:00-19:00">06:00 PM - 07:00 PM</option>
-                        </select>
-                    </div>
-                    
-                    <!-- <div class="form-group">
-                        <label for="budget">Project Budget (KSh)</label>
-                        <select id="budget" name="budget">
-                            <option value="">Select budget range</option>
-                            <option value="0-5000">0 - 5,000</option>
-                            <option value="5000-15000">5,000 - 15,000</option>
-                            <option value="15000-30000">15,000 - 30,000</option>
-                            <option value="30000-50000">30,000 - 50,000</option>
-                            <option value="50000+">50,000+</option>
-                        </select>
-                    </div> -->
-                    
+
                     <div class="form-group">
                         <label for="message">Your Message *</label>
                         <textarea id="message" name="message" placeholder="Tell us about your project and any specific requirements..." required></textarea>
                     </div>
-                    
-                    <div class="form-group">
-                        <div class="checkbox-group">
-                            <input type="checkbox" id="terms" name="terms" required>
-                            <label for="terms">I understand that my preferred date and time are subject to availability and will be confirmed by Williams Studios.</label>
-                        </div>
+
+                    <div class="form-checkbox">
+                        <input type="checkbox" id="terms" name="terms" required>
+                        <label for="terms">I understand that my preferred date and time are subject to availability and will be confirmed by Williams Records. By submitting this form, I agree to be contacted via call or text message.</label>
                     </div>
-                    
-                    <button type="submit" class="btn" style="width: 100%;">
+
+                    <button type="submit" class="btn">
                         <i class="fas fa-paper-plane"></i> Send Message
                     </button>
                 </form>
             </div>
-           
         </div>
 
-        <!-- Map Section -->
-        <div class="map-container animate-on-scroll">
-            <iframe 
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.85434737326!2d36.821214274992!3d-1.262735435615559!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x182f173c4a5dffff%3A0x5c5c5b5b5b5b5b5b!2sBridge%20International%20Academy!5e0!3m2!1sen!2ske!4v1234567890" 
-                width="100%" 
-                height="400" 
-                style="border:0;" 
-                allowfullscreen="" 
-                loading="lazy" 
+        <!-- Map -->
+        <div class="map-wrap animate-on-scroll" id="map">
+            <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.85434737326!2d36.821214274992!3d-1.262735435615559!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x182f173c4a5dffff%3A0x5c5c5b5b5b5b5b5b!2sBridge%20International%20Academy!5e0!3m2!1sen!2ske!4v1234567890"
+                allowfullscreen=""
+                loading="lazy"
                 referrerpolicy="no-referrer-when-downgrade">
             </iframe>
         </div>
     </section>
 
-    <!-- Quick Action Section -->
-    <section class="section" style="background: var(--light); text-align: center;">
-        <div class="section-title">
-            <h2>Quick Actions</h2>
-            <p>Get immediate assistance through these channels</p>
-        </div>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; max-width: 800px; margin: 0 auto;">
-            <a href="tel:+254792347505" class="btn" style="display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
-                <i class="fas fa-phone"></i> Call Now
-            </a>
-            <a href="https://wa.me/+254745342734" class="btn" style="display: flex; align-items: center; justify-content: center; gap: 0.5rem; background: #25D366;">
-                <i class="fab fa-whatsapp"></i> WhatsApp
-            </a>
-            <a href="mailto:danwilliams9930@gmail.com" class="btn" style="display: flex; align-items: center; justify-content: center; gap: 0.5rem; background: var(--accent);">
-                <i class="fas fa-envelope"></i> Email Us
-            </a>
-            <a href="services.html" class="btn btn-outline" style="display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
-                <i class="fas fa-info-circle"></i> View Services
-            </a>
+    <!-- ===== QUICK ACTIONS BAND ===== -->
+    <section class="quick-actions animate-on-scroll">
+        <div class="quick-actions-inner">
+            <h2>Need a Quick Response?</h2>
+            <p>Choose the fastest way to connect with us right now.</p>
+            <div class="quick-action-grid">
+                <a href="tel:+254792347505" class="quick-action-btn">
+                    <i class="fas fa-phone"></i>
+                    <span>Call Now</span>
+                </a>
+                <a href="https://wa.me/+254745342734" class="quick-action-btn">
+                    <i class="fab fa-whatsapp"></i>
+                    <span>WhatsApp</span>
+                </a>
+                <a href="mailto:danwilliams9930@gmail.com" class="quick-action-btn">
+                    <i class="fas fa-envelope"></i>
+                    <span>Email Us</span>
+                </a>
+                <a href="services.html" class="quick-action-btn">
+                    <i class="fas fa-info-circle"></i>
+                    <span>Our Services</span>
+                </a>
+            </div>
         </div>
     </section>
 
     <!-- Footer -->
     <footer>
         <div class="footer-content">
-            <div class="footer-col">
-                <h3>Williams Studios</h3>
-                <p>Creating exceptional audio and visual experiences that inspire and captivate audiences.</p>
-                <div class="social-links">
-                    <a href="https://www.instagram.com/williams_on_the_beat?igsh=aGJueDVmMGozd2Ni"><i class="fab fa-facebook-f"></i></a>
-                    <a href="https://www.instagram.com/williams_on_the_beat?igsh=aGJueDVmMGozd2Ni"><i class="fab fa-instagram"></i></a>
+            <div class="footer-brand">
+                <div class="logo">
+                    <i class="fas fa-headphones"></i>
+                    <span>Williams Records</span>
+                </div>
+                <p>Creating exceptional audio and visual experiences that inspire and captivate audiences worldwide.</p>
+                <div class="footer-social">
+                    <a href="https://www.instagram.com/williams_on_the_beat"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.instagram.com/williams_on_the_beat"><i class="fab fa-instagram"></i></a>
                     <a href="http://tiktok.com/@williams_on_the_beat"><i class="fab fa-tiktok"></i></a>
-                    <a href="https://youtube.com/@officialwilliamsrecords?si=HROc-WbH38rg9fkC"><i class="fab fa-youtube"></i></a>
+                    <a href="https://youtube.com/@officialwilliamsrecords"><i class="fab fa-youtube"></i></a>
                 </div>
             </div>
+
             <div class="footer-col">
-                <h3>Quick Links</h3>
-                <ul class="footer-links">
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="about.html">About Us</a></li>
-                    <li><a href="services.html">Services</a></li>
-                    <li><a href="gallery.html">Gallery</a></li>
-                    <li><a href="team.html">Our Team</a></li>
-                    <!-- <li><a href="electronics.html">Electronics</a></li> -->
-                    <li><a href="contact.html">Contact</a></li>
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="index.html"><i class="fas fa-chevron-right"></i> Home</a></li>
+                    <li><a href="about.html"><i class="fas fa-chevron-right"></i> About Us</a></li>
+                    <li><a href="services.html"><i class="fas fa-chevron-right"></i> Services</a></li>
+                    <li><a href="contact.html"><i class="fas fa-chevron-right"></i> Contact</a></li>
                 </ul>
             </div>
+
             <div class="footer-col">
-                <h3>Services</h3>
-                <ul class="footer-links">
-                    <li><a href="services.html#music-recording">Music Recording</a></li>
-                    <li><a href="services.html#photography">Photography</a></li>
-                    <li><a href="services.html#video-clips">Video Production</a></li>
-                    <li><a href="services.html#wedding-filming">Wedding Filming</a></li>
-                    <li><a href="services.html#audio-mixing">Audio Mixing</a></li>
-                    <li><a href="services.html#live-events">Live Events</a></li>
+                <h4>Services</h4>
+                <ul>
+                    <li><a href="services.html#music-recording"><i class="fas fa-chevron-right"></i> Music Recording</a></li>
+                    <li><a href="services.html#photography"><i class="fas fa-chevron-right"></i> Photography</a></li>
+                    <li><a href="services.html#video-clips"><i class="fas fa-chevron-right"></i> Video Production</a></li>
+                    <li><a href="services.html#audio-mixing"><i class="fas fa-chevron-right"></i> Audio Mixing</a></li>
                 </ul>
             </div>
+
             <div class="footer-col">
-                <h3>Contact Info</h3>
-                <p><i class="fas fa-map-marker-alt"></i> Gichagi, Bridge International Academy</p>
-                <p><i class="fas fa-phone-alt"></i> +254 792-347-505</p>
-                <p><i class="fas fa-envelope"></i> danwilliams9930@gmail.com</p>
+                <h4>Contact Info</h4>
+                <div class="footer-contact-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Gichagi, Bridge International Academy</span>
+                </div>
+                <div class="footer-contact-item">
+                    <i class="fas fa-phone-alt"></i>
+                    <span>+254 792-347-505</span>
+                </div>
+                <div class="footer-contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <span>danwilliams9930@gmail.com</span>
+                </div>
+                <div class="footer-contact-item">
+                    <i class="fas fa-clock"></i>
+                    <span>Mon-Fri: 9AM – 7PM<br>Sat: 10AM – 4PM</span>
+                </div>
             </div>
         </div>
-        <div class="copyright">
-            <p>
-              &copy; 2025 <a href="https://jonathan28-dot.github.io/Jonathan_portfolio/" target="_blank" style="color: #0d6efd; text-decoration: none; font-weight: 500;">
-                Williams Studios
-              </a>. All Rights Reserved. <br>
-              <small>Developed by <a href="https://jonathan28-dot.github.io/Jonathan_portfolio/" target="_blank" style="color: #0d6efd; text-decoration: none;">Jonathan Bosimwenda</a></small>
-            </p>
+
+        <div class="footer-bottom">
+            <p>&copy; 2025 Williams Records. All Rights Reserved.</p>
+            <a href="https://jonathanbosimwenda28.netlify.app/" target="_blank" class="dev-btn">
+                <i class="fas fa-code"></i> Developed by JO
+            </a>
         </div>
     </footer>
 
-    <!-- Booking Prompt Overlay -->
-    <div class="prompt-overlay" id="promptOverlay"></div>
-
-    <!-- Booking Prompt -->
-    <div class="booking-prompt" id="bookingPrompt">
-        <button class="close-prompt" id="closePrompt">&times;</button>
-        <div class="booking-prompt-header">
-            <i class="fas fa-calendar-check"></i>
-            <h3>Ready to Create Something Amazing?</h3>
-            <p>Book your session now and get 15% off your first project!</p>
-        </div>
-        
-        <div class="booking-features">
-            <div class="booking-feature">
-                <i class="fas fa-star"></i>
-                <span>Premium Quality</span>
-            </div>
-            <div class="booking-feature">
-                <i class="fas fa-clock"></i>
-                <span>Flexible Scheduling</span>
-            </div>
-            <div class="booking-feature">
-                <i class="fas fa-users"></i>
-                <span>Expert Team</span>
-            </div>
-            <div class="booking-feature">
-                <i class="fas fa-gift"></i>
-                <span>Special Offer</span>
-            </div>
-        </div>
-        
-        <div class="booking-prompt-btns">
-            <a href="contact.html" class="btn">
-                <i class="fas fa-calendar-alt"></i> Book Now
-            </a>
-            <button class="btn btn-outline" id="laterBtn">
-                <i class="fas fa-clock"></i> Remind Later
-            </button>
-        </div>
-    </div>
-
-    <script src="script.js"></script>
     <script>
-        // Set minimum date to today for the date picker
+        // ===== Mobile menu =====
+        const menuBtn = document.querySelector('.menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+        menuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            menuBtn.innerHTML = navLinks.classList.contains('active') ? '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+        });
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                menuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+            });
+        });
+
+        // ===== Header scroll =====
+        const header = document.getElementById('header');
+        window.addEventListener('scroll', () => {
+            header.classList.toggle('header-scroll', window.scrollY > 80);
+        });
+
+        // ===== Animation on scroll =====
+        const animateElements = document.querySelectorAll('.animate-on-scroll');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('animated');
+            });
+        }, { threshold: 0.1 });
+        animateElements.forEach(el => observer.observe(el));
+
+        // ===== Theme toggle =====
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+        const currentTheme = localStorage.getItem('theme');
+        if (currentTheme === 'dark') {
+            body.setAttribute('data-theme', 'dark');
+            themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+        }
+        themeToggle.addEventListener('click', () => {
+            if (body.getAttribute('data-theme') === 'dark') {
+                body.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'light');
+                themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+            } else {
+                body.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+                themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+            }
+        });
+
+        // ===== Set minimum date to today =====
         document.addEventListener('DOMContentLoaded', function() {
             const dateInput = document.getElementById('preferred-date');
             const today = new Date();
             const yyyy = today.getFullYear();
             const mm = String(today.getMonth() + 1).padStart(2, '0');
             const dd = String(today.getDate()).padStart(2, '0');
-            
             dateInput.min = `${yyyy}-${mm}-${dd}`;
-            
-            // Contact form handling
-            document.getElementById('contactForm').addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                // Get form data
-                const formData = new FormData(this);
-                const name = formData.get('name');
-                const email = formData.get('email');
-                const service = formData.get('service');
-                const preferredDate = formData.get('preferred-date');
-                const preferredTime = formData.get('preferred-time');
-                
-                // Simple validation
-                if (!name || !email || !service || !preferredDate || !preferredTime) {
-                    alert('Please fill in all required fields');
-                    return;
-                }
-                
-                // Show success message
-                alert('Thank you for your message, ' + name + '! We will get back to you within 24 hours to confirm your appointment for ' + preferredDate + ' at ' + preferredTime + '.');
-                this.reset();
-                
-                // Reset the minimum date
-                dateInput.min = `${yyyy}-${mm}-${dd}`;
-            });
         });
     </script>
 </body>
 </html>
-
-
-

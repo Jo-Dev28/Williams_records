@@ -3,219 +3,1149 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gallery - Williams Studios</title>
+    <title>Gallery - Williams Records</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
-    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" href="will.jpg">
     <style>
-        /* Enhanced Gallery Modal */
-        .gallery-modal {
-            display: none;
+        :root {
+            --secondary: #E67E22;
+            --accent: #F1C40F;
+            --dark: #1E1E2F;
+            --light: #FDF8F3;
+            --text: #2D2A24;
+            --text-light: #FFF9F0;
+            --bg-color: #FDF8F3;
+            --card-bg: #FFFFFF;
+            --header-bg: linear-gradient(145deg, #FFFFFF 0%, #FEF6E8 100%);
+            --transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            --shadow-sm: 0 4px 10px rgba(230, 126, 34, 0.08);
+            --shadow-md: 0 8px 20px rgba(230, 126, 34, 0.12);
+            --shadow-lg: 0 20px 40px rgba(230, 126, 34, 0.18);
+            --border-radius: 20px;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #1A1815;
+            --text: #F5EDE4;
+            --light: #2A2724;
+            --card-bg: #2E2B28;
+            --header-bg: linear-gradient(145deg, #2A2724 0%, #1F1D1A 100%);
+            --shadow-sm: 0 4px 10px rgba(0, 0, 0, 0.3);
+            --shadow-md: 0 8px 20px rgba(0, 0, 0, 0.4);
+            --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', 'Segoe UI', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text);
+            overflow-x: hidden;
+            transition: var(--transition);
+            line-height: 1.6;
+            font-size: 15px;
+        }
+
+        /* Theme Toggle */
+        .theme-toggle {
             position: fixed;
+            bottom: 130px;
+            right: 28px;
+            background: var(--secondary);
+            color: #1E1E2F;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.1rem;
+            box-shadow: var(--shadow-sm);
+            z-index: 999;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+        }
+        .theme-toggle:hover { transform: scale(1.1) rotate(15deg); background: var(--accent); }
+
+        /* Header */
+        header {
+            background: var(--header-bg);
+            padding: 0.7rem 1.5rem;
+            position: fixed;
+            width: 100%;
             top: 0;
-            left: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            border-bottom: 2px solid var(--secondary);
+        }
+
+        .header-scroll {
+            padding: 0.4rem 1.5rem;
+            background: rgba(255, 248, 240, 0.96);
+            backdrop-filter: blur(12px);
+        }
+        [data-theme="dark"] .header-scroll { background: rgba(42, 39, 36, 0.96); }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.4rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            letter-spacing: -0.3px;
+        }
+
+        .logo i {
+            margin-right: 8px;
+            background: linear-gradient(135deg, var(--secondary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 1.6rem;
+        }
+
+        .logo span {
+            background: linear-gradient(135deg, var(--secondary), #D35400);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 0.3rem;
+            background: rgba(230, 126, 34, 0.08);
+            padding: 0.3rem 0.8rem;
+            border-radius: 50px;
+            backdrop-filter: blur(4px);
+        }
+
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.8rem;
+            padding: 0.4rem 0.9rem;
+            border-radius: 40px;
+            transition: var(--transition);
+            display: inline-block;
+        }
+
+        .nav-links a:hover {
+            background: rgba(230, 126, 34, 0.15);
+            color: var(--secondary);
+            transform: translateY(-1px);
+        }
+
+        .nav-links a.active {
+            background: var(--secondary);
+            color: white;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 10px rgba(230, 126, 34, 0.3);
+        }
+
+        .menu-btn {
+            display: none;
+            font-size: 1.4rem;
+            cursor: pointer;
+            color: var(--secondary);
+        }
+
+        /* Floating buttons */
+        .whatsapp-btn {
+            text-decoration: none;
+            position: fixed;
+            bottom: 25px; right: 25px;
+            background: #25D366; color: white;
+            width: 42px; height: 42px;
+            border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            font-size: 1.6rem;
+            box-shadow: 0 6px 14px rgba(37, 211, 102, 0.3);
+            z-index: 999;
+            transition: var(--transition);
+            animation: pulse 2s infinite;
+        }
+        .whatsapp-btn:hover { transform: scale(1.1); }
+
+        .call-btn {
+            text-decoration: none;
+            position: fixed;
+            bottom: 75px; right: 27px;
+            background: var(--secondary); color: white;
+            width: 36px; height: 36px;
+            border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            font-size: 1.2rem;
+            box-shadow: var(--shadow-sm);
+            z-index: 999;
+            transition: var(--transition);
+        }
+        .call-btn:hover { transform: scale(1.1); background: var(--accent); color: #1E1E2F; }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
+            70% { box-shadow: 0 0 0 12px rgba(37, 211, 102, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+        }
+
+        /* ===== HERO - COMPACT EDITORIAL ===== */
+        .gallery-hero {
+            padding: 5rem 1.5rem 2rem;
+            margin-top: 1px;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, #E67E22 0%, #D35400 100%);
+            color: #FFF9F0;
+            min-height: 300px;
+            display: flex;
+            align-items: center;
+        }
+
+        .gallery-hero::before {
+            content: '';
+            position: absolute;
+            top: -80px; right: -80px;
+            width: 280px; height: 280px;
+            background: rgba(241, 196, 15, 0.15);
+            border-radius: 50%;
+        }
+
+        .gallery-hero::after {
+            content: '';
+            position: absolute;
+            bottom: -100px; left: -60px;
+            width: 240px; height: 240px;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 50%;
+        }
+
+        .gallery-hero-inner {
+            max-width: 1150px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1.6fr 1fr;
+            gap: 2rem;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+            width: 100%;
+        }
+
+        .gallery-hero-text .tag {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(6px);
+            color: var(--accent);
+            padding: 0.25rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.65rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            border: 1px solid rgba(241, 196, 15, 0.3);
+            margin-bottom: 0.6rem;
+        }
+
+        .gallery-hero-text h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 0.6rem;
+            letter-spacing: -0.4px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .gallery-hero-text h1 span { color: var(--accent); }
+
+        .gallery-hero-text p {
+            font-size: 0.88rem;
+            opacity: 0.95;
+            max-width: 520px;
+        }
+
+        .gallery-hero-icon {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .gallery-hero-ring {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(241, 196, 15, 0.3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            animation: gentleFloat 4s ease-in-out infinite;
+        }
+
+        .gallery-hero-ring i {
+            font-size: 3.2rem;
+            color: var(--accent);
+        }
+
+        .gallery-hero-ring::before,
+        .gallery-hero-ring::after {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+            border: 1px dashed rgba(241, 196, 15, 0.3);
+        }
+
+        .gallery-hero-ring::before { width: 170px; height: 170px; }
+        .gallery-hero-ring::after {
+            width: 200px; height: 200px;
+            border-style: dotted;
+            opacity: 0.5;
+        }
+
+        @keyframes gentleFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        /* Sections */
+        .section {
+            padding: 2.5rem 1.5rem;
+            max-width: 1150px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 1.8rem;
+        }
+
+        .section-title h2 {
+            font-size: 1.9rem;
+            color: var(--secondary);
+            position: relative;
+            display: inline-block;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            width: 60%;
+            height: 3px;
+            background: linear-gradient(to right, var(--secondary), var(--accent));
+            bottom: -8px;
+            left: 20%;
+            border-radius: 4px;
+        }
+
+        .section-title p {
+            color: var(--text);
+            max-width: 600px;
+            margin: 0.8rem auto 0;
+            opacity: 0.85;
+            font-size: 0.9rem;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            background: var(--secondary);
+            color: white;
+            padding: 0.55rem 1.4rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.85rem;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(230, 126, 34, 0.25);
+            letter-spacing: 0.2px;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            background: var(--accent);
+            color: #1E1E2F;
+            box-shadow: 0 6px 16px rgba(241, 196, 15, 0.3);
+        }
+
+        .btn-ghost {
+            background: transparent;
+            border: 2px solid var(--secondary);
+            color: var(--secondary);
+            box-shadow: none;
+        }
+        .btn-ghost:hover {
+            background: var(--secondary);
+            color: white;
+        }
+
+        /* ===== FILTER BAR ===== */
+        .filter-bar {
+            display: flex;
+            justify-content: center;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+
+        .filter-btn {
+            background: var(--card-bg);
+            color: var(--text);
+            border: 1.5px solid rgba(230, 126, 34, 0.2);
+            padding: 0.45rem 1.1rem;
+            border-radius: 50px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: inherit;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .filter-btn i { font-size: 0.75rem; color: var(--secondary); }
+
+        .filter-btn:hover {
+            border-color: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .filter-btn.active {
+            background: var(--secondary);
+            color: white;
+            border-color: var(--secondary);
+            box-shadow: 0 4px 12px rgba(230, 126, 34, 0.3);
+        }
+
+        .filter-btn.active i { color: white; }
+
+        /* ===== MASONRY GRID ===== */
+        .gallery-masonry {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            grid-auto-rows: 200px;
+        }
+
+        .gallery-tile {
+            position: relative;
+            overflow: hidden;
+            border-radius: 16px;
+            box-shadow: var(--shadow-sm);
+            cursor: pointer;
+            transition: var(--transition);
+            background: var(--card-bg);
+            border: 1px solid rgba(230, 126, 34, 0.08);
+        }
+
+        .gallery-tile:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--accent);
+        }
+
+        .gallery-tile.tall { grid-row: span 2; }
+        .gallery-tile.wide { grid-column: span 2; }
+        .gallery-tile.big { grid-column: span 2; grid-row: span 2; }
+
+        .gallery-tile img {
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.95);
-            z-index: 2000;
-            justify-content: center;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.6s ease;
+        }
+
+        .gallery-tile:hover img { transform: scale(1.06); }
+
+        .gallery-tile::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(30, 30, 47, 0.75) 0%, transparent 55%);
+            opacity: 0.7;
+            transition: var(--transition);
+        }
+
+        .gallery-tile:hover::after { opacity: 0.95; }
+
+        .tile-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 1.1rem 1rem;
+            z-index: 2;
+            color: #FFF9F0;
+            transform: translateY(6px);
+            transition: var(--transition);
+        }
+
+        .gallery-tile:hover .tile-content { transform: translateY(0); }
+
+        .tile-badge {
+            display: inline-flex;
             align-items: center;
+            gap: 0.3rem;
+            background: var(--accent);
+            color: #1E1E2F;
+            font-size: 0.6rem;
+            font-weight: 700;
+            padding: 0.22rem 0.55rem;
+            border-radius: 30px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.5rem;
+        }
+
+        .tile-badge.photo { background: var(--accent); }
+        .tile-badge.video { background: #ff5722; color: white; }
+        .tile-badge.live { background: #ff0000; color: white; }
+
+        .tile-content h4 {
+            font-size: 0.9rem;
+            margin-bottom: 0.15rem;
+            font-weight: 700;
+        }
+
+        .tile-content p {
+            font-size: 0.7rem;
+            opacity: 0.85;
+        }
+
+        .tile-play {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.85);
+            width: 56px; height: 56px;
+            border-radius: 50%;
+            background: rgba(241, 196, 15, 0.95);
+            color: #1E1E2F;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            z-index: 2;
             opacity: 0;
-            transition: opacity 0.3s ease-in-out;
+            transition: var(--transition);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
         }
 
-        .gallery-modal.show {
-            display: flex;
+        .gallery-tile:hover .tile-play {
             opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
         }
 
-        .gallery-modal-content {
-            position: relative;
-            max-width: 90%;
-            max-height: 90%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+        .gallery-tile.is-video .tile-play { opacity: 0.9; transform: translate(-50%, -50%) scale(1); }
 
-        .gallery-modal-item {
-            max-width: 100%;
-            max-height: 80vh;
-            border-radius: 10px;
+        /* Hidden tiles for filtering */
+        .gallery-tile.hide {
             display: none;
         }
 
-        .gallery-modal-item.active {
+        /* ===== LIVE RECORDINGS BAND ===== */
+        .live-band {
+            background: linear-gradient(135deg, #E67E22 0%, #D35400 100%);
+            color: #FFF9F0;
+            border-radius: var(--border-radius);
+            padding: 2.5rem 1.5rem;
+            margin: 2rem 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .live-band::before {
+            content: '';
+            position: absolute;
+            top: -80px; right: -80px;
+            width: 260px; height: 260px;
+            background: rgba(241, 196, 15, 0.15);
+            border-radius: 50%;
+        }
+
+        .live-band::after {
+            content: '';
+            position: absolute;
+            bottom: -100px; left: -60px;
+            width: 240px; height: 240px;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 50%;
+        }
+
+        .live-band .section-title { position: relative; z-index: 1; }
+        .live-band .section-title h2 { color: #FFF9F0; }
+        .live-band .section-title h2::after { background: var(--accent); }
+        .live-band .section-title p { color: #FFF9F0; }
+
+        .live-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .live-card {
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(12px);
+            border-radius: 16px;
+            padding: 1.2rem 1.1rem;
+            border: 1px solid rgba(255, 215, 120, 0.25);
+            transition: var(--transition);
+            text-decoration: none;
+            color: #FFF9F0;
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+
+        .live-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.2);
+            border-color: var(--accent);
+        }
+
+        .live-card-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .live-card-icon {
+            width: 38px; height: 38px;
+            border-radius: 10px;
+            background: rgba(255, 0, 0, 0.9);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+        }
+
+        .live-card-label {
+            font-size: 0.6rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--accent);
+            padding: 0.2rem 0.55rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+        }
+
+        .live-card h4 {
+            font-size: 0.95rem;
+            color: #FFF9F0;
+        }
+
+        .live-card p {
+            font-size: 0.75rem;
+            opacity: 0.85;
+        }
+
+        .live-card .watch-link {
+            font-size: 0.72rem;
+            font-weight: 600;
+            color: var(--accent);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            margin-top: auto;
+        }
+
+        /* ===== CTA ===== */
+        .cta-band {
+            background: linear-gradient(135deg, #E67E22 0%, #D35400 100%);
+            color: #FFF9F0;
+            text-align: center;
+            padding: 2.5rem 1.5rem;
+            max-width: 1150px;
+            margin: 0 auto 2rem;
+            border-radius: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-band::before {
+            content: '';
+            position: absolute;
+            top: -80px; right: -80px;
+            width: 280px; height: 280px;
+            background: rgba(241, 196, 15, 0.15);
+            border-radius: 50%;
+        }
+
+        .cta-band::after {
+            content: '';
+            position: absolute;
+            bottom: -100px; left: -60px;
+            width: 240px; height: 240px;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 50%;
+        }
+
+        .cta-band-inner { position: relative; z-index: 1; }
+
+        .cta-band i.cta-icon {
+            font-size: 2rem;
+            color: var(--accent);
+            margin-bottom: 0.7rem;
+        }
+
+        .cta-band h2 {
+            font-size: 1.7rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .cta-band p {
+            font-size: 0.88rem;
+            opacity: 0.95;
+            margin-bottom: 1.6rem;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-band .cta-btns {
+            display: flex;
+            gap: 0.8rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .cta-band .btn {
+            background: #FFF9F0;
+            color: var(--secondary);
+        }
+        .cta-band .btn:hover {
+            background: var(--accent);
+            color: #1E1E2F;
+        }
+
+        .cta-band .btn-ghost {
+            background: transparent;
+            border-color: #FFF9F0;
+            color: #FFF9F0;
+        }
+        .cta-band .btn-ghost:hover {
+            background: #FFF9F0;
+            color: var(--secondary);
+        }
+
+        /* ===== LIGHTBOX MODAL ===== */
+        .lightbox {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 15, 25, 0.94);
+            backdrop-filter: blur(8px);
+            z-index: 5000;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        .lightbox.show { display: flex; animation: fadeIn 0.3s; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .lightbox-content {
+            position: relative;
+            max-width: 1000px;
+            width: 100%;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .lightbox-media {
+            max-width: 100%;
+            max-height: 78vh;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+            background: #000;
+        }
+
+        .lightbox-media img,
+        .lightbox-media video {
+            max-width: 100%;
+            max-height: 78vh;
             display: block;
         }
 
-        .gallery-modal-item img {
-            max-width: 100%;
-            max-height: 80vh;
-            object-fit: contain;
-            border-radius: 10px;
+        .lightbox-caption {
+            color: #FFF9F0;
+            text-align: center;
         }
 
-        .gallery-modal-item iframe {
-            width: 80vw;
-            height: 45vw;
-            max-width: 1000px;
-            max-height: 562px;
-            border-radius: 10px;
-            border: none;
+        .lightbox-caption h4 {
+            font-size: 1.05rem;
+            margin-bottom: 0.2rem;
         }
 
-        /* Navigation Arrows */
-        .modal-nav {
+        .lightbox-caption p {
+            font-size: 0.78rem;
+            opacity: 0.75;
+        }
+
+        .lightbox-close {
             position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(255, 255, 255, 0.2);
+            top: -20px;
+            right: 0;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.15);
             color: white;
-            border: none;
-            width: 60px;
-            height: 60px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
-            font-size: 1.5rem;
-            cursor: pointer;
-            transition: var(--transition);
             display: flex;
             align-items: center;
             justify-content: center;
-            backdrop-filter: blur(10px);
-        }
-
-        .modal-nav:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: translateY(-50%) scale(1.1);
-        }
-
-        .modal-prev {
-            left: 20px;
-        }
-
-        .modal-next {
-            right: 20px;
-        }
-
-        /* Close Button */
-        .modal-close {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            border: none;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            font-size: 1.5rem;
+            font-size: 1.1rem;
             cursor: pointer;
             transition: var(--transition);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            backdrop-filter: blur(10px);
-            z-index: 2001;
         }
 
-        .modal-close:hover {
-            background: rgba(255, 255, 255, 0.3);
+        .lightbox-close:hover {
+            background: var(--secondary);
+            border-color: var(--secondary);
             transform: rotate(90deg);
         }
 
-        /* Gallery Item Overlay */
-        .gallery-item {
-            position: relative;
-            cursor: pointer;
-        }
-
-        .gallery-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(106, 17, 203, 0.8);
+        .lightbox-nav {
             display: flex;
-            align-items: center;
+            gap: 0.6rem;
             justify-content: center;
-            opacity: 0;
-            transition: var(--transition);
         }
 
-        .gallery-item:hover .gallery-overlay {
-            opacity: 1;
-        }
-
-        .gallery-info {
-            text-align: center;
+        .lightbox-nav button {
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.18);
             color: white;
-        }
-
-        .gallery-info h3 {
-            margin-bottom: 0.5rem;
-            font-size: 1.2rem;
-        }
-
-        /* Video Play Button */
-        .video-play-btn {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: rgba(255, 255, 255, 0.9);
-            color: var(--secondary);
-            width: 60px;
-            height: 60px;
+            width: 42px;
+            height: 42px;
             border-radius: 50%;
+            cursor: pointer;
+            transition: var(--transition);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
-            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .lightbox-nav button:hover {
+            background: var(--accent);
+            color: #1E1E2F;
+            border-color: var(--accent);
+            transform: scale(1.1);
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: var(--dark);
+            color: #F5EDE4;
+            padding: 3rem 1.5rem 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 4px;
+            background: linear-gradient(to right, var(--secondary), var(--accent), var(--secondary));
+        }
+
+        .footer-content {
+            max-width: 1150px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr 1.2fr;
+            gap: 2rem;
+        }
+
+        .footer-brand { display: flex; flex-direction: column; gap: 1rem; }
+
+        .footer-brand .logo {
+            font-size: 1.3rem;
+            color: #F5EDE4;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer-brand .logo i { color: var(--secondary); font-size: 1.5rem; }
+        .footer-brand .logo span {
+            background: linear-gradient(135deg, var(--secondary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .footer-brand p { font-size: 0.8rem; opacity: 0.75; line-height: 1.6; }
+
+        .footer-social { display: flex; gap: 0.5rem; margin-top: 0.5rem; }
+
+        .footer-social a {
+            color: #F5EDE4;
+            background: rgba(255, 255, 255, 0.07);
+            width: 34px; height: 34px;
+            border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            transition: var(--transition);
+            font-size: 0.85rem;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .footer-social a:hover {
+            background: var(--secondary);
+            color: white;
+            transform: translateY(-3px);
+            border-color: var(--secondary);
+        }
+
+        .footer-col h4 {
+            font-size: 1rem;
+            margin-bottom: 1.2rem;
+            color: #F5EDE4;
+            position: relative;
+            padding-bottom: 0.6rem;
+        }
+
+        .footer-col h4::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0;
+            width: 30px; height: 2px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        .footer-col ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+
+        .footer-col ul li a {
+            color: #F5EDE4;
+            text-decoration: none;
+            font-size: 0.82rem;
+            opacity: 0.75;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .footer-col ul li a i { font-size: 0.6rem; color: var(--accent); transition: var(--transition); }
+        .footer-col ul li a:hover { opacity: 1; color: var(--secondary); transform: translateX(4px); }
+
+        .footer-contact-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.7rem;
+            margin-bottom: 0.9rem;
+        }
+
+        .footer-contact-item i { color: var(--accent); font-size: 0.9rem; margin-top: 3px; }
+        .footer-contact-item span { font-size: 0.82rem; opacity: 0.8; line-height: 1.5; }
+
+        .footer-bottom {
+            max-width: 1150px;
+            margin: 2.5rem auto 0;
+            padding-top: 1.2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .footer-bottom p { font-size: 0.75rem; opacity: 0.6; }
+
+        .dev-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(230, 126, 34, 0.15);
+            color: var(--secondary);
+            text-decoration: none;
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 0.3rem 0.8rem;
+            border-radius: 30px;
+            border: 1px solid rgba(230, 126, 34, 0.3);
             transition: var(--transition);
         }
-
-        .video-play-btn:hover {
-            background: white;
-            transform: translate(-50%, -50%) scale(1.1);
-        }
-
-        /* Gallery Counter */
-        .gallery-counter {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
+        .dev-btn:hover {
+            background: var(--secondary);
             color: white;
-            background: rgba(0, 0, 0, 0.7);
-            padding: 0.5rem 1rem;
-            border-radius: 25px;
-            font-size: 0.9rem;
-            backdrop-filter: blur(10px);
+            transform: translateY(-2px);
+            border-color: var(--secondary);
+        }
+        .dev-btn i { font-size: 0.6rem; }
+
+        /* Animations */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(25px);
+            transition: var(--transition);
+        }
+        .animate-on-scroll.animated {
+            opacity: 1;
+            transform: translateY(0);
         }
 
-        /* Responsive adjustments for modal */
+        /* Responsive */
+        @media (max-width: 992px) {
+            .gallery-hero-inner { grid-template-columns: 1fr; }
+            .gallery-hero-icon { display: none; }
+            .gallery-hero-text h1 { font-size: 1.8rem; }
+            .gallery-masonry { grid-template-columns: repeat(3, 1fr); grid-auto-rows: 180px; }
+            .footer-content { grid-template-columns: 1fr 1fr; }
+        }
+
         @media (max-width: 768px) {
-            .modal-nav {
-                width: 50px;
-                height: 50px;
-                font-size: 1.2rem;
+            .menu-btn { display: block; }
+
+            /* ===== MOBILE NAV MENU ===== */
+            .nav-links {
+                position: fixed;
+                top: 60px;
+                left: -100%;
+                background: #FFF9F0;
+                width: 100%;
+                height: calc(100vh - 60px);
+                flex-direction: column;
+                align-items: center;
+                padding: 1.5rem 1rem;
+                transition: var(--transition);
+                border-radius: 0;
+                box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+                gap: 0.4rem;
+                z-index: 999;
+                overflow-y: auto;
             }
 
-            .modal-prev {
-                left: 10px;
+            [data-theme="dark"] .nav-links {
+                background: #1F1D1A;
             }
 
-            .modal-next {
-                right: 10px;
+            .nav-links.active { left: 0; }
+
+            /* Base mobile link */
+            .nav-links a {
+                display: block;
+                width: 100%;
+                max-width: 320px;
+                text-align: center;
+                padding: 0.75rem 1rem;
+                font-size: 0.95rem;
+                font-weight: 600;
+                color: #2D2A24;
+                background: transparent;
+                border-radius: 12px;
+                transition: all 0.25s ease;
+                transform: none;
+                box-shadow: none;
             }
 
-            .gallery-modal-item iframe {
-                width: 95vw;
-                height: 53.5vw;
+            [data-theme="dark"] .nav-links a {
+                color: #F5EDE4;
             }
+
+            /* Hover — soft tint only */
+            .nav-links a:hover {
+                background: rgba(230, 126, 34, 0.12);
+                color: var(--secondary);
+                transform: none;
+            }
+
+            [data-theme="dark"] .nav-links a:hover {
+                background: rgba(230, 126, 34, 0.18);
+                color: var(--secondary);
+            }
+
+            /* Active page — solid orange pill */
+            .nav-links a.active {
+                background: var(--secondary);
+                color: #FFFFFF;
+                box-shadow: 0 6px 16px rgba(230, 126, 34, 0.35);
+            }
+
+            .nav-links a.active:hover {
+                background: var(--secondary);
+                color: #FFFFFF;
+            }
+
+            /* Hide any desktop underline pseudo-element */
+            .nav-links a::after {
+                display: none;
+            }
+
+            .gallery-hero { padding: 4.5rem 1.2rem 1.5rem; min-height: 300px; }
+            .gallery-hero-text h1 { font-size: 1.6rem; }
+            .gallery-hero-text p { font-size: 0.85rem; }
+
+            .section { padding: 2rem 1rem; }
+            .section-title h2 { font-size: 1.6rem; }
+
+            .gallery-masonry {
+                grid-template-columns: repeat(2, 1fr);
+                grid-auto-rows: 160px;
+                gap: 0.8rem;
+            }
+            .gallery-tile.wide { grid-column: span 2; }
+            .gallery-tile.big { grid-column: span 2; grid-row: span 2; }
+
+            .live-band { margin: 1.5rem 1rem; padding: 2rem 1.2rem; }
+            .live-grid { grid-template-columns: repeat(2, 1fr); }
+
+            .cta-band h2 { font-size: 1.4rem; }
+            .footer-content { grid-template-columns: 1fr; gap: 1.5rem; }
+            .footer-bottom { flex-direction: column; text-align: center; }
+        }
+
+        @media (max-width: 480px) {
+            .gallery-hero-text h1 { font-size: 1.4rem; }
+            .gallery-masonry { grid-template-columns: 1fr; grid-auto-rows: 200px; }
+            .gallery-tile.wide,
+            .gallery-tile.big { grid-column: span 1; }
+            .gallery-tile.tall,
+            .gallery-tile.big { grid-row: span 1; }
+            .live-grid { grid-template-columns: 1fr; }
+            .filter-btn { padding: 0.4rem 0.9rem; font-size: 0.72rem; }
+            .cta-band .cta-btns { flex-direction: column; align-items: stretch; }
+            .btn { padding: 0.45rem 1rem; font-size: 0.75rem; }
         }
     </style>
 </head>
@@ -240,7 +1170,7 @@
         <div class="navbar">
             <div class="logo">
                 <i class="fas fa-headphones"></i>
-                <span>Williams Studios</span>
+                <span>Williams Records Af</span>
             </div>
             <div class="menu-btn">
                 <i class="fas fa-bars"></i>
@@ -248,467 +1178,512 @@
             <ul class="nav-links">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="services.html">Services</a></li>
-                <!-- <li><a href="electronics.html">Electronics</a></li> -->
                 <li><a href="gallery.html" class="active">Gallery</a></li>
-                <li><a href="about.html">About Us</a></li>
-                <li><a href="team.html">Our Team</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="team.html">Team</a></li>
                 <li><a href="contact.html">Contact</a></li>
             </ul>
         </div>
     </header>
 
-    <!-- Page Hero -->
-    <section class="page-hero">
-        <h1>Our Gallery</h1>
-        <p>Explore our portfolio of creative projects and see the quality of our work</p>
+    <!-- ===== HERO - COMPACT EDITORIAL ===== -->
+    <section class="gallery-hero">
+        <div class="gallery-hero-inner">
+            <div class="gallery-hero-text">
+                <span class="tag">Our Gallery</span>
+                <h1>Moments We've <span>Captured</span>.</h1>
+                <p>A curated look at the sessions, shoots, live recordings, and events we've been privileged to work on. Explore photos, videos, and live performances from Williams Records.</p>
+            </div>
+            <div class="gallery-hero-icon">
+                <div class="gallery-hero-ring">
+                    <i class="fas fa-images"></i>
+                </div>
+            </div>
+        </div>
     </section>
 
-    <!-- Gallery Section -->
+    <!-- ===== GALLERY GRID ===== -->
     <section class="section">
         <div class="section-title">
-            <h2>Photo Gallery</h2>
-            <p>Capturing moments and creating memories through our lens</p>
+            <h2>Explore Our Work</h2>
+            <p>Filter by category to see photos, videos, and live recordings</p>
         </div>
-        <div class="gallery-grid">
-            <div class="gallery-item animate-on-scroll">
-                <img src="photo1.png" alt="Concert Photography">
-                <div class="gallery-overlay">
-                    <div class="gallery-info">
-                        <h3>Photo Shoot</h3>
-                        <p>Music event coverage</p>
-                    </div>
+
+        <!-- Filter Bar -->
+        <div class="filter-bar">
+            <button class="filter-btn active" data-filter="all"><i class="fas fa-th-large"></i> All</button>
+            <button class="filter-btn" data-filter="photo"><i class="fas fa-camera"></i> Photos</button>
+            <button class="filter-btn" data-filter="video"><i class="fas fa-video"></i> Videos</button>
+            <button class="filter-btn" data-filter="live"><i class="fab fa-youtube"></i> Live</button>
+        </div>
+
+        <!-- Masonry Grid -->
+        <div class="gallery-masonry" id="galleryGrid">
+
+            <!-- Photo 1 - big -->
+            <div class="gallery-tile big animate-on-scroll" data-cat="photo" onclick="openLightbox('photo2.jpg', 'Concert Photography', 'Live concert coverage', false)">
+                <img src="photo2.jpg" alt="Concert Photography">
+                <div class="tile-content">
+                    <span class="tile-badge photo"><i class="fas fa-camera"></i> Photo</span>
+                    <h4>Concert Coverage</h4>
+                    <p>Live stage performance</p>
                 </div>
             </div>
-            <div class="gallery-item animate-on-scroll">
-                <img src="phote7.jpg" alt="Studio Session">
-                <div class="gallery-overlay">
-                    <div class="gallery-info">
-                        <h3>Studio Recording</h3>
-                        <p>Artist session</p>
-                    </div>
+
+            <!-- Photo 2 -->
+            <div class="gallery-tile animate-on-scroll" data-cat="photo" onclick="openLightbox('photo3.jpg', 'Studio Session', 'Behind the scenes', false)">
+                <img src="photo3.jpg" alt="Studio Session">
+                <div class="tile-content">
+                    <span class="tile-badge photo"><i class="fas fa-camera"></i> Photo</span>
+                    <h4>Studio Session</h4>
+                    <p>Recording in progress</p>
                 </div>
             </div>
-            <div class="gallery-item animate-on-scroll">
-                <img src="photo3.jpg" alt="wedding">
-                <div class="gallery-overlay">
-                    <div class="gallery-info">
-                        <h3>Wedding Shoot</h3>
-                        <p>Portrait & Event Shoots</p>
-                    </div>
+
+            <!-- Photo 3 - tall -->
+            <div class="gallery-tile tall animate-on-scroll" data-cat="photo" onclick="openLightbox('photo1.png', 'DJ Performance', 'Live at the event', false)">
+                <img src="photo1.png" alt="DJ Performance">
+                <div class="tile-content">
+                    <span class="tile-badge photo"><i class="fas fa-camera"></i> Photo</span>
+                    <h4>DJ Performance</h4>
+                    <p>Live at the event</p>
                 </div>
             </div>
-            <div class="gallery-item animate-on-scroll">
-                <img src="photo2.jpg" alt="shoot">
-                <div class="gallery-overlay">
-                    <div class="gallery-info">
-                        <h3>Photo Shoot</h3>
-                        <p>Williams work</p>
-                    </div>
+
+            <!-- Video 1 -->
+            <div class="gallery-tile is-video animate-on-scroll" data-cat="video" onclick="openLightbox('', 'Music Video — MEDZA', 'Official music video production', true, 'https://www.youtube.com/embed/YYsZkwox8Ms')">
+                <img src="will.jpg" alt="Music Video">
+                <div class="tile-play"><i class="fas fa-play"></i></div>
+                <div class="tile-content">
+                    <span class="tile-badge video"><i class="fas fa-video"></i> Video</span>
+                    <h4>Music Video — MEDZA</h4>
+                    <p>Official production</p>
                 </div>
             </div>
-            <div class="gallery-item animate-on-scroll">
-                <img src="photograp.jpg" alt="Portrait Photography">
-                <div class="gallery-overlay">
-                    <div class="gallery-info">
-                        <h3>Portrait Session</h3>
-                        <p>Professional photography</p>
-                    </div>
+
+            <!-- Photo 4 -->
+            <div class="gallery-tile animate-on-scroll" data-cat="photo" onclick="openLightbox('will.jpg', 'Studio Life', 'Inside the studio', false)">
+                <img src="will.jpg" alt="Studio Life">
+                <div class="tile-content">
+                    <span class="tile-badge photo"><i class="fas fa-camera"></i> Photo</span>
+                    <h4>Studio Life</h4>
+                    <p>Inside the studio</p>
                 </div>
             </div>
-            <div class="gallery-item animate-on-scroll">
-                <img src="photo6.jpg" alt="image Production">
-                <div class="gallery-overlay">
-                    <div class="gallery-info">
-                        <h3>Photo Shoot</h3>
-                        <p>Photo set</p>
-                    </div>
+
+            <!-- Video 2 - wide -->
+            <div class="gallery-tile is-video wide animate-on-scroll" data-cat="video" onclick="openLightbox('', 'Music Video — NIK THE PSALMIST', 'Cinematic visuals', true, 'https://www.youtube.com/embed/5N-CsLvwHfM')">
+                <img src="photo2.jpg" alt="Music Video">
+                <div class="tile-play"><i class="fas fa-play"></i></div>
+                <div class="tile-content">
+                    <span class="tile-badge video"><i class="fas fa-video"></i> Video</span>
+                    <h4>Music Video — NIK THE PSALMIST</h4>
+                    <p>Cinematic visuals</p>
                 </div>
             </div>
-            <div class="gallery-item animate-on-scroll">
-                <img src="photo5.jpg" alt="photo Production">
-                <div class="gallery-overlay">
-                    <div class="gallery-info">
-                        <h3>Photo Shoot</h3>
-                        <p>Photo set</p>
-                    </div>
+
+            <!-- Live 1 -->
+            <div class="gallery-tile is-video animate-on-scroll" data-cat="live" onclick="openLightbox('', 'Live Recording — HANNINGTONE', 'Gospel live session', true, 'https://www.youtube.com/embed/yT8FiDC5Z8w')">
+                <img src="photo3.jpg" alt="Live Recording">
+                <div class="tile-play"><i class="fab fa-youtube"></i></div>
+                <div class="tile-content">
+                    <span class="tile-badge live"><i class="fab fa-youtube"></i> Live</span>
+                    <h4>HANNINGTONE</h4>
+                    <p>Gospel live session</p>
                 </div>
             </div>
-            <div class="gallery-item animate-on-scroll">
-                <img src="68417fddf11a3.jpg" alt="photos Production">
-                <div class="gallery-overlay">
-                    <div class="gallery-info">
-                        <h3>Photo Shoot</h3>
-                        <p>Production set</p>
-                    </div>
+
+            <!-- Photo 5 -->
+            <div class="gallery-tile animate-on-scroll" data-cat="photo" onclick="openLightbox('photo1.png', 'Portrait Session', 'Studio portrait', false)">
+                <img src="photo1.png" alt="Portrait Session">
+                <div class="tile-content">
+                    <span class="tile-badge photo"><i class="fas fa-camera"></i> Photo</span>
+                    <h4>Portrait Session</h4>
+                    <p>Studio portrait</p>
                 </div>
             </div>
+
+            <!-- Live 2 -->
+            <div class="gallery-tile is-video animate-on-scroll" data-cat="live" onclick="openLightbox('', 'Live Recording — JANET OUDU', 'Live studio performance', true, 'https://www.youtube.com/embed/mtr8Gm7s1io')">
+                <img src="photo2.jpg" alt="Live Recording">
+                <div class="tile-play"><i class="fab fa-youtube"></i></div>
+                <div class="tile-content">
+                    <span class="tile-badge live"><i class="fab fa-youtube"></i> Live</span>
+                    <h4>JANET OUDU</h4>
+                    <p>Live studio performance</p>
+                </div>
+            </div>
+
+            <!-- Video 3 - tall -->
+            <div class="gallery-tile is-video tall animate-on-scroll" data-cat="video" onclick="openLightbox('', 'Music Video — ARROWBOY', 'High energy visuals', true, 'https://www.youtube.com/embed/FY8DJOxmgH0')">
+                <img src="photo3.jpg" alt="Music Video">
+                <div class="tile-play"><i class="fas fa-play"></i></div>
+                <div class="tile-content">
+                    <span class="tile-badge video"><i class="fas fa-video"></i> Video</span>
+                    <h4>Music Video — ARROWBOY</h4>
+                    <p>High energy visuals</p>
+                </div>
+            </div>
+
+            <!-- Photo 6 -->
+            <div class="gallery-tile animate-on-scroll" data-cat="photo" onclick="openLightbox('will.jpg', 'Behind the Scenes', 'Studio environment', false)">
+                <img src="will.jpg" alt="Behind the Scenes">
+                <div class="tile-content">
+                    <span class="tile-badge photo"><i class="fas fa-camera"></i> Photo</span>
+                    <h4>Behind the Scenes</h4>
+                    <p>Studio environment</p>
+                </div>
+            </div>
+
+            <!-- Live 3 -->
+            <div class="gallery-tile is-video animate-on-scroll" data-cat="live" onclick="openLightbox('', 'Live Recording — MASAUTI', 'Live session', true, 'https://www.youtube.com/embed/lDctT0kJgis')">
+                <img src="photo1.png" alt="Live Recording">
+                <div class="tile-play"><i class="fab fa-youtube"></i></div>
+                <div class="tile-content">
+                    <span class="tile-badge live"><i class="fab fa-youtube"></i> Live</span>
+                    <h4>MASAUTI</h4>
+                    <p>Live session</p>
+                </div>
+            </div>
+
+            <!-- Video 4 -->
+            <div class="gallery-tile is-video animate-on-scroll" data-cat="video" onclick="openLightbox('', 'Wedding Film', 'Cinematic wedding coverage', true, 'https://www.youtube.com/embed/YYsZkwox8Ms')">
+                <img src="photo2.jpg" alt="Wedding Film">
+                <div class="tile-play"><i class="fas fa-play"></i></div>
+                <div class="tile-content">
+                    <span class="tile-badge video"><i class="fas fa-video"></i> Video</span>
+                    <h4>Wedding Film</h4>
+                    <p>Cinematic coverage</p>
+                </div>
+            </div>
+
         </div>
     </section>
 
-    <!-- Live Recordings Section -->
-    <section class="section" style="background: var(--light);">
+    <!-- ===== LIVE RECORDINGS BAND ===== -->
+    <section class="live-band animate-on-scroll">
         <div class="section-title">
             <h2>Live Recordings</h2>
-            <p>Watch our latest live performances and studio sessions</p>
+            <p>Full live performances from our YouTube channel</p>
         </div>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
-            <div class="service-card animate-on-scroll">
-                <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-                    <img src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Live Performance" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;">
-                    <div class="video-play-btn" data-video-index="8">
-                        <i class="fas fa-play"></i>
-                    </div>
+        <div class="live-grid">
+            <a href="https://youtu.be/YYsZkwox8Ms?si=j7Pt7eQjAj7jVsgN" target="_blank" class="live-card">
+                <div class="live-card-top">
+                    <div class="live-card-icon"><i class="fab fa-youtube"></i></div>
+                    <span class="live-card-label">Live</span>
                 </div>
-                <div class="service-content">
-                    <h3>MEDZA Live Session</h3>
-                    <p>Amazing live performance captured in our studio</p>
-                    <a href="https://youtu.be/YYsZkwox8Ms" target="_blank" class="btn">Watch on YouTube</a>
+                <h4>MEDZA</h4>
+                <p>Live studio recording</p>
+                <span class="watch-link">Watch on YouTube <i class="fas fa-arrow-right"></i></span>
+            </a>
+            <a href="https://youtu.be/5N-CsLvwHfM?si=0i1fHH4ubt5bZsMk" target="_blank" class="live-card">
+                <div class="live-card-top">
+                    <div class="live-card-icon"><i class="fab fa-youtube"></i></div>
+                    <span class="live-card-label">Live</span>
                 </div>
-            </div>
-            
-            <!-- <div class="service-card animate-on-scroll">
-                <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-                    <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Studio Session" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;">
-                    <div class="video-play-btn" data-video-index="10">
-                        <i class="fas fa-play"></i>
-                    </div>
+                <h4>NIK THE PSALMIST</h4>
+                <p>Live studio recording</p>
+                <span class="watch-link">Watch on YouTube <i class="fas fa-arrow-right"></i></span>
+            </a>
+            <a href="https://youtu.be/yT8FiDC5Z8w?si=XSbJcn-sErLSIXit" target="_blank" class="live-card">
+                <div class="live-card-top">
+                    <div class="live-card-icon"><i class="fab fa-youtube"></i></div>
+                    <span class="live-card-label">Gospel</span>
                 </div>
-                <div class="service-content">
-                    <h3>Live Performance</h3>
-                    <p>Captivating live music experience</p>
-                    <a href="https://youtu.be/5N-CsLvwHfM?si=Ru4CT3_zk_AhcZij" target="_blank" class="btn">Watch on YouTube</a>
+                <h4>HANNINGTONE</h4>
+                <p>Gospel live session</p>
+                <span class="watch-link">Watch on YouTube <i class="fas fa-arrow-right"></i></span>
+            </a>
+            <a href="https://youtu.be/mtr8Gm7s1io?si=hKY8LzbYHqm6xFvN" target="_blank" class="live-card">
+                <div class="live-card-top">
+                    <div class="live-card-icon"><i class="fab fa-youtube"></i></div>
+                    <span class="live-card-label">Live</span>
                 </div>
-            </div>
-            <div class="service-card animate-on-scroll">
-                <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-                    <img src="https://images.unsplash.com/photo-1571974599782-87624638275f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80" alt="Studio Session" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;">
-                    <div class="video-play-btn" data-video-index="11">
-                        <i class="fas fa-play"></i>
-                    </div>
+                <h4>JANET OUDU</h4>
+                <p>Live studio performance</p>
+                <span class="watch-link">Watch on YouTube <i class="fas fa-arrow-right"></i></span>
+            </a>
+            <a href="https://youtu.be/FY8DJOxmgH0?si=4vjHFuXUVGFof3aj" target="_blank" class="live-card">
+                <div class="live-card-top">
+                    <div class="live-card-icon"><i class="fab fa-youtube"></i></div>
+                    <span class="live-card-label">Live</span>
                 </div>
-                <div class="service-content">
-                    <h3>Behind the Scenes</h3>
-                    <p>Exclusive look at our production process</p>
-                    <a href="https://youtu.be/dQw4w9WgXcQ" target="_blank" class="btn">Watch on YouTube</a>
+                <h4>ARROWBOY</h4>
+                <p>Live studio recording</p>
+                <span class="watch-link">Watch on YouTube <i class="fas fa-arrow-right"></i></span>
+            </a>
+            <a href="https://youtu.be/lDctT0kJgis?si=ATo037RPb2uCBFUx" target="_blank" class="live-card">
+                <div class="live-card-top">
+                    <div class="live-card-icon"><i class="fab fa-youtube"></i></div>
+                    <span class="live-card-label">Live</span>
                 </div>
-            </div> -->
+                <h4>MASAUTI</h4>
+                <p>Live studio recording</p>
+                <span class="watch-link">Watch on YouTube <i class="fas fa-arrow-right"></i></span>
+            </a>
         </div>
     </section>
 
-    <!-- YouTube Section -->
-    <section class="section" style="background: var(--secondary); color: white; text-align: center;">
-        <div class="section-title">
-            <h2 style="color: white;">More on YouTube</h2>
-            <p style="color: white;">Subscribe to our channel for the latest content</p>
+    <!-- ===== CTA ===== -->
+    <section class="cta-band animate-on-scroll">
+        <div class="cta-band-inner">
+            <i class="fas fa-camera-retro cta-icon"></i>
+            <h2>Ready to Be Featured Next?</h2>
+            <p>Book a session with us and let's create visuals and sound you'll be proud to share.</p>
+            <div class="cta-btns">
+                <a href="contact.html" class="btn">Book a Session</a>
+                <a href="services.html" class="btn btn-ghost">View Services</a>
+            </div>
         </div>
-        <a href="https://youtube.com/@officialwilliamsrecords?si=HROc-WbH38rg9fkC" target="_blank" class="btn" style="background: white; color: var(--secondary); margin-top: 2rem;">
-            <i class="fab fa-youtube"></i> Visit Our YouTube
-        </a>
     </section>
+
+    <!-- ===== LIGHTBOX MODAL ===== -->
+    <div class="lightbox" id="lightbox">
+        <div class="lightbox-content">
+            <button class="lightbox-close" id="lightboxClose"><i class="fas fa-times"></i></button>
+            <div class="lightbox-media" id="lightboxMedia"></div>
+            <div class="lightbox-caption">
+                <h4 id="lightboxTitle">Title</h4>
+                <p id="lightboxSub">Subtitle</p>
+            </div>
+            <div class="lightbox-nav">
+                <button id="lightboxPrev"><i class="fas fa-chevron-left"></i></button>
+                <button id="lightboxNext"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+    </div>
 
     <!-- Footer -->
     <footer>
         <div class="footer-content">
-            <div class="footer-col">
-                <h3>Williams Studios</h3>
-                <p>Creating exceptional audio and visual experiences that inspire and captivate audiences.</p>
-                <div class="social-links">
-                    <a href="https://www.instagram.com/williams_on_the_beat?igsh=aGJueDVmMGozd2Ni"><i class="fab fa-facebook-f"></i></a>
-                    <a href="https://www.instagram.com/williams_on_the_beat?igsh=aGJueDVmMGozd2Ni"><i class="fab fa-instagram"></i></a>
+            <div class="footer-brand">
+                <div class="logo">
+                    <i class="fas fa-headphones"></i>
+                    <span>Williams Records</span>
+                </div>
+                <p>Creating exceptional audio and visual experiences that inspire and captivate audiences worldwide.</p>
+                <div class="footer-social">
+                    <a href="https://www.instagram.com/williams_on_the_beat"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.instagram.com/williams_on_the_beat"><i class="fab fa-instagram"></i></a>
                     <a href="http://tiktok.com/@williams_on_the_beat"><i class="fab fa-tiktok"></i></a>
-                    <a href="https://youtube.com/@officialwilliamsrecords?si=HROc-WbH38rg9fkC"><i class="fab fa-youtube"></i></a>
+                    <a href="https://youtube.com/@officialwilliamsrecords"><i class="fab fa-youtube"></i></a>
                 </div>
             </div>
+
             <div class="footer-col">
-                <h3>Quick Links</h3>
-                <ul class="footer-links">
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="about.html">About Us</a></li>
-                    <li><a href="services.html">Services</a></li>
-                    <li><a href="gallery.html">Gallery</a></li>
-                    <li><a href="team.html">Our Team</a></li>
-                    <!-- <li><a href="electronics.html">Electronics</a></li> -->
-                    <li><a href="contact.html">Contact</a></li>
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="index.html"><i class="fas fa-chevron-right"></i> Home</a></li>
+                    <li><a href="about.html"><i class="fas fa-chevron-right"></i> About Us</a></li>
+                    <li><a href="services.html"><i class="fas fa-chevron-right"></i> Services</a></li>
+                    <li><a href="contact.html"><i class="fas fa-chevron-right"></i> Contact</a></li>
                 </ul>
             </div>
+
             <div class="footer-col">
-                <h3>Services</h3>
-                <ul class="footer-links">
-                    <li><a href="services.html#music-recording">Music Recording</a></li>
-                    <li><a href="services.html#photography">Photography</a></li>
-                    <li><a href="services.html#video-clips">Video Production</a></li>
-                    <li><a href="services.html#wedding-filming">Wedding Filming</a></li>
-                    <li><a href="services.html#audio-mixing">Audio Mixing</a></li>
-                    <li><a href="services.html#live-events">Live Events</a></li>
+                <h4>Services</h4>
+                <ul>
+                    <li><a href="services.html#music-recording"><i class="fas fa-chevron-right"></i> Music Recording</a></li>
+                    <li><a href="services.html#photography"><i class="fas fa-chevron-right"></i> Photography</a></li>
+                    <li><a href="services.html#video-clips"><i class="fas fa-chevron-right"></i> Video Production</a></li>
+                    <li><a href="services.html#audio-mixing"><i class="fas fa-chevron-right"></i> Audio Mixing</a></li>
                 </ul>
             </div>
+
             <div class="footer-col">
-                <h3>Contact Info</h3>
-                <p><i class="fas fa-map-marker-alt"></i> Gichagi, Bridge International Academy</p>
-                <p><i class="fas fa-phone-alt"></i> +254 792-347-505</p>
-                <p><i class="fas fa-envelope"></i> danwilliams9930@gmail.com</p>
+                <h4>Contact Info</h4>
+                <div class="footer-contact-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Gichagi, Bridge International Academy</span>
+                </div>
+                <div class="footer-contact-item">
+                    <i class="fas fa-phone-alt"></i>
+                    <span>+254 792-347-505</span>
+                </div>
+                <div class="footer-contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <span>danwilliams9930@gmail.com</span>
+                </div>
+                <div class="footer-contact-item">
+                    <i class="fas fa-clock"></i>
+                    <span>Mon-Fri: 9AM – 7PM<br>Sat: 10AM – 4PM</span>
+                </div>
             </div>
         </div>
-        <div class="copyright">
-            <p>
-              &copy; 2025 <a href="https://jonathan28-dot.github.io/Jonathan_portfolio/" target="_blank" style="color: #0d6efd; text-decoration: none; font-weight: 500;">
-                Williams Studios
-              </a>. All Rights Reserved. <br>
-              <small>Developed by <a href="https://jonathan28-dot.github.io/Jonathan_portfolio/" target="_blank" style="color: #0d6efd; text-decoration: none;">Jonathan Bosimwenda</a></small>
-            </p>
+
+        <div class="footer-bottom">
+            <p>&copy; 2025 Williams Records. All Rights Reserved.</p>
+            <a href="https://jonathanbosimwenda28.netlify.app/" target="_blank" class="dev-btn">
+                <i class="fas fa-code"></i> Developed by JO
+            </a>
         </div>
     </footer>
 
-    <!-- Booking Prompt Overlay -->
-    <div class="prompt-overlay" id="promptOverlay"></div>
-
-    <!-- Booking Prompt -->
-    <div class="booking-prompt" id="bookingPrompt">
-        <button class="close-prompt" id="closePrompt">&times;</button>
-        <div class="booking-prompt-header">
-            <i class="fas fa-calendar-check"></i>
-            <h3>Ready to Create Something Amazing?</h3>
-            <p>Book your session now and get 15% off your first project!</p>
-        </div>
-        
-        <div class="booking-features">
-            <div class="booking-feature">
-                <i class="fas fa-star"></i>
-                <span>Premium Quality</span>
-            </div>
-            <div class="booking-feature">
-                <i class="fas fa-clock"></i>
-                <span>Flexible Scheduling</span>
-            </div>
-            <div class="booking-feature">
-                <i class="fas fa-users"></i>
-                <span>Expert Team</span>
-            </div>
-            <div class="booking-feature">
-                <i class="fas fa-gift"></i>
-                <span>Special Offer</span>
-            </div>
-        </div>
-        
-        <div class="booking-prompt-btns">
-            <a href="contact.html" class="btn">
-                <i class="fas fa-calendar-alt"></i> Book Now
-            </a>
-            <button class="btn btn-outline" id="laterBtn">
-                <i class="fas fa-clock"></i> Remind Later
-            </button>
-        </div>
-    </div>
-
     <script>
-        // Enhanced Gallery Modal with Navigation
-        class GalleryModal {
-            constructor() {
-                this.currentIndex = 0;
-                this.items = [];
-                this.init();
-            }
-
-            init() {
-                this.createModal();
-                this.setupEventListeners();
-            }
-
-            createModal() {
-                const modalHTML = `
-                    <div class="gallery-modal" id="galleryModal">
-                        <button class="modal-close" id="modalClose">&times;</button>
-                        <button class="modal-nav modal-prev" id="modalPrev">
-                            <i class="fas fa-chevron-left"></i>
-                        </button>
-                        <button class="modal-nav modal-next" id="modalNext">
-                            <i class="fas fa-chevron-right"></i>
-                        </button>
-                        <div class="gallery-modal-content" id="modalContent"></div>
-                        <div class="gallery-counter" id="galleryCounter"></div>
-                    </div>
-                `;
-                document.body.insertAdjacentHTML('beforeend', modalHTML);
-            }
-
-            setupEventListeners() {
-                // Close modal
-                document.getElementById('modalClose').addEventListener('click', () => this.close());
-                
-                // Navigation
-                document.getElementById('modalPrev').addEventListener('click', () => this.prev());
-                document.getElementById('modalNext').addEventListener('click', () => this.next());
-                
-                // Keyboard navigation
-                document.addEventListener('keydown', (e) => {
-                    if (!this.isOpen()) return;
-                    
-                    switch(e.key) {
-                        case 'Escape':
-                            this.close();
-                            break;
-                        case 'ArrowLeft':
-                            this.prev();
-                            break;
-                        case 'ArrowRight':
-                            this.next();
-                            break;
-                    }
-                });
-
-                // Close on overlay click
-                document.getElementById('galleryModal').addEventListener('click', (e) => {
-                    if (e.target === document.getElementById('galleryModal')) {
-                        this.close();
-                    }
-                });
-            }
-
-            open(items, startIndex = 0) {
-                this.items = items;
-                this.currentIndex = startIndex;
-                this.render();
-                document.getElementById('galleryModal').classList.add('show');
-                document.body.style.overflow = 'hidden';
-            }
-
-            close() {
-                document.getElementById('galleryModal').classList.remove('show');
-                document.body.style.overflow = 'auto';
-            }
-
-            isOpen() {
-                return document.getElementById('galleryModal').classList.contains('show');
-            }
-
-            prev() {
-                this.currentIndex = (this.currentIndex - 1 + this.items.length) % this.items.length;
-                this.render();
-            }
-
-            next() {
-                this.currentIndex = (this.currentIndex + 1) % this.items.length;
-                this.render();
-            }
-
-            render() {
-                const modalContent = document.getElementById('modalContent');
-                const counter = document.getElementById('galleryCounter');
-                
-                modalContent.innerHTML = '';
-                
-                this.items.forEach((item, index) => {
-                    const itemElement = document.createElement('div');
-                    itemElement.className = `gallery-modal-item ${index === this.currentIndex ? 'active' : ''}`;
-                    
-                    if (item.type === 'video') {
-                        itemElement.innerHTML = `
-                            <iframe src="${item.src}" 
-                                    frameborder="0" 
-                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                    allowfullscreen>
-                            </iframe>
-                        `;
-                    } else {
-                        itemElement.innerHTML = `<img src="${item.src}" alt="${item.alt || 'Gallery image'}">`;
-                    }
-                    
-                    modalContent.appendChild(itemElement);
-                });
-
-                // Update counter
-                counter.textContent = `${this.currentIndex + 1} / ${this.items.length}`;
-            }
-        }
-
-        // Initialize gallery when DOM is loaded
-        let galleryModal;
-
-        document.addEventListener('DOMContentLoaded', function() {
-            galleryModal = new GalleryModal();
-            
-            // Setup gallery items
-            const galleryItems = [
-                {
-                    src: 'photo1.png',
-                    alt: 'Concert Photography',
-                    type: 'image'
-                },
-                {
-                    src: 'phote7.jpg',
-                    alt: 'Studio Session',
-                    type: 'image'
-                },
-                {
-                    src: 'photo3.jpg',
-                    alt: 'wedding',
-                    type: 'image'
-                },
-                {
-                    src: 'photo2.jpg',
-                    alt: 'shoot',
-                    type: 'image'
-                },
-                {
-                    src: 'photograp.jpg',
-                    alt: 'Portrait Photography',
-                    type: 'image'
-                },
-                {
-                    src: 'photo6.jpg',
-                    alt: 'image Production',
-                    type: 'image'
-                },
-                {
-                    src: 'photo5.jpg',
-                    alt: 'photo Production',
-                    type: 'image'
-                },
-                {
-                    src: '68417fddf11a3.jpg',
-                    alt: 'photos Production',
-                    type: 'image'
-                },
-                // Video items with YouTube embed URLs
-                {
-                    src: 'https://www.youtube.com/embed/YYsZkwox8Ms?autoplay=1',
-                    alt: 'MEDZA Live Session',
-                    type: 'video'
-                },
-                
-                {
-                    src: 'https://youtu.be/5N-CsLvwHfM?si=Ru4CT3_zk_AhcZij',
-                    alt: 'Live Performance',
-                    type: 'video'
-                },
-                {
-                    src: 'https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1',
-                    alt: 'Behind the Scenes',
-                    type: 'video'
-                }
-            ];
-
-            // Add click handlers to gallery items
-            document.querySelectorAll('.gallery-item').forEach((item, index) => {
-                item.addEventListener('click', () => {
-                    galleryModal.open(galleryItems, index);
-                });
+        // ===== Mobile menu =====
+        const menuBtn = document.querySelector('.menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+        menuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            menuBtn.innerHTML = navLinks.classList.contains('active') ? '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+        });
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                menuBtn.innerHTML = '<i class="fas fa-bars"></i>';
             });
+        });
 
-            // Add video play buttons
-            document.querySelectorAll('.video-play-btn').forEach((btn) => {
-                btn.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    const videoIndex = parseInt(btn.getAttribute('data-video-index'));
-                    galleryModal.open(galleryItems, videoIndex);
+        // ===== Header scroll =====
+        const header = document.getElementById('header');
+        window.addEventListener('scroll', () => {
+            header.classList.toggle('header-scroll', window.scrollY > 80);
+        });
+
+        // ===== Animation on scroll =====
+        const animateElements = document.querySelectorAll('.animate-on-scroll');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('animated');
+            });
+        }, { threshold: 0.1 });
+        animateElements.forEach(el => observer.observe(el));
+
+        // ===== Theme toggle =====
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+        const currentTheme = localStorage.getItem('theme');
+        if (currentTheme === 'dark') {
+            body.setAttribute('data-theme', 'dark');
+            themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+        }
+        themeToggle.addEventListener('click', () => {
+            if (body.getAttribute('data-theme') === 'dark') {
+                body.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'light');
+                themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+            } else {
+                body.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+                themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+            }
+        });
+
+        // ===== Filter gallery tiles =====
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const tiles = document.querySelectorAll('.gallery-tile');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const filter = btn.getAttribute('data-filter');
+
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                tiles.forEach(tile => {
+                    const cat = tile.getAttribute('data-cat');
+                    if (filter === 'all' || cat === filter) {
+                        tile.classList.remove('hide');
+                        tile.style.opacity = '0';
+                        tile.style.transform = 'translateY(12px)';
+                        setTimeout(() => {
+                            tile.style.opacity = '';
+                            tile.style.transform = '';
+                        }, 20);
+                    } else {
+                        tile.classList.add('hide');
+                    }
                 });
             });
         });
+
+        // ===== Lightbox =====
+        const lightbox = document.getElementById('lightbox');
+        const lightboxMedia = document.getElementById('lightboxMedia');
+        const lightboxTitle = document.getElementById('lightboxTitle');
+        const lightboxSub = document.getElementById('lightboxSub');
+        const lightboxClose = document.getElementById('lightboxClose');
+        const lightboxPrev = document.getElementById('lightboxPrev');
+        const lightboxNext = document.getElementById('lightboxNext');
+
+        // Build a list of currently visible tiles for prev/next navigation
+        let visibleTiles = [];
+        let currentIndex = 0;
+
+        function refreshVisibleTiles() {
+            visibleTiles = Array.from(document.querySelectorAll('.gallery-tile')).filter(t => !t.classList.contains('hide'));
+        }
+
+        function openLightbox(src, title, subtitle, isVideo = false, embedUrl = '') {
+            refreshVisibleTiles();
+            currentIndex = visibleTiles.findIndex(t => {
+                const tTitle = t.querySelector('.tile-content h4')?.textContent || '';
+                return tTitle === title;
+            });
+            if (currentIndex < 0) currentIndex = 0;
+
+            renderLightbox(src, title, subtitle, isVideo, embedUrl);
+            lightbox.classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function renderLightbox(src, title, subtitle, isVideo, embedUrl) {
+            lightboxMedia.innerHTML = '';
+            if (isVideo && embedUrl) {
+                const iframe = document.createElement('iframe');
+                iframe.src = embedUrl;
+                iframe.width = '900';
+                iframe.height = '506';
+                iframe.style.maxWidth = '100%';
+                iframe.style.border = '0';
+                iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+                iframe.allowFullscreen = true;
+                lightboxMedia.appendChild(iframe);
+            } else if (src) {
+                const img = document.createElement('img');
+                img.src = src;
+                img.alt = title;
+                lightboxMedia.appendChild(img);
+            }
+            lightboxTitle.textContent = title || '';
+            lightboxSub.textContent = subtitle || '';
+        }
+
+        function closeLightbox() {
+            lightbox.classList.remove('show');
+            lightboxMedia.innerHTML = '';
+            document.body.style.overflow = 'auto';
+        }
+
+        function loadTileAt(index) {
+            if (index < 0 || index >= visibleTiles.length) return;
+            currentIndex = index;
+            const tile = visibleTiles[index];
+            const title = tile.querySelector('.tile-content h4')?.textContent || '';
+            const subtitle = tile.querySelector('.tile-content p')?.textContent || '';
+            const isVideo = tile.classList.contains('is-video');
+            const src = tile.querySelector('img')?.getAttribute('src') || '';
+            const onclick = tile.getAttribute('onclick') || '';
+            // Extract embed URL from onclick
+            const match = onclick.match(/'([^']*youtube[^']*)'/);
+            const embedUrl = match ? match[1] : '';
+            renderLightbox(src, title, subtitle, isVideo, embedUrl);
+        }
+
+        lightboxClose.addEventListener('click', closeLightbox);
+        lightboxPrev.addEventListener('click', () => loadTileAt(currentIndex - 1));
+        lightboxNext.addEventListener('click', () => loadTileAt(currentIndex + 1));
+
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) closeLightbox();
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (!lightbox.classList.contains('show')) return;
+            if (e.key === 'Escape') closeLightbox();
+            if (e.key === 'ArrowLeft') loadTileAt(currentIndex - 1);
+            if (e.key === 'ArrowRight') loadTileAt(currentIndex + 1);
+        });
     </script>
-
-    <script src="script.js"></script>
 </body>
-
 </html>
-
-
