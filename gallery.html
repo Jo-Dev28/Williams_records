@@ -202,7 +202,7 @@
             100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
         }
 
-        /* ===== HERO - COMPACT EDITORIAL ===== */
+        /* HERO */
         .gallery-hero {
             padding: 5rem 1.5rem 2rem;
             margin-top: 1px;
@@ -396,7 +396,7 @@
             color: white;
         }
 
-        /* ===== FILTER BAR ===== */
+        /* FILTER BAR */
         .filter-bar {
             display: flex;
             justify-content: center;
@@ -438,7 +438,7 @@
 
         .filter-btn.active i { color: white; }
 
-        /* ===== MASONRY GRID ===== */
+        /* MASONRY GRID */
         .gallery-masonry {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -563,7 +563,7 @@
             display: none;
         }
 
-        /* ===== LIVE RECORDINGS BAND ===== */
+        /* LIVE RECORDINGS BAND */
         .live-band {
             background: linear-gradient(135deg, #E67E22 0%, #D35400 100%);
             color: #FFF9F0;
@@ -673,7 +673,7 @@
             margin-top: auto;
         }
 
-        /* ===== CTA ===== */
+        /* CTA */
         .cta-band {
             background: linear-gradient(135deg, #E67E22 0%, #D35400 100%);
             color: #FFF9F0;
@@ -753,7 +753,7 @@
             color: var(--secondary);
         }
 
-        /* ===== LIGHTBOX MODAL ===== */
+        /* LIGHTBOX MODAL */
         .lightbox {
             display: none;
             position: fixed;
@@ -867,7 +867,7 @@
             transform: scale(1.1);
         }
 
-        /* ===== FOOTER ===== */
+        /* FOOTER */
         footer {
             background: var(--dark);
             color: #F5EDE4;
@@ -902,7 +902,12 @@
             gap: 8px;
         }
 
-        .footer-brand .logo i { color: var(--secondary); font-size: 1.5rem; }
+        .footer-brand .logo i {
+            color: var(--secondary);
+            font-size: 1.5rem;
+            background: none;
+            -webkit-text-fill-color: var(--secondary);
+        }
         .footer-brand .logo span {
             background: linear-gradient(135deg, var(--secondary), var(--accent));
             -webkit-background-clip: text;
@@ -922,6 +927,7 @@
             transition: var(--transition);
             font-size: 0.85rem;
             border: 1px solid rgba(255, 255, 255, 0.08);
+            text-decoration: none;
         }
         .footer-social a:hover {
             background: var(--secondary);
@@ -992,6 +998,35 @@
 
         .footer-bottom p { font-size: 0.75rem; opacity: 0.6; }
 
+        .footer-bottom-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+        }
+
+        .admin-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(241, 196, 15, 0.1);
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 0.3rem 0.8rem;
+            border-radius: 30px;
+            border: 1px solid rgba(241, 196, 15, 0.3);
+            transition: var(--transition);
+        }
+        .admin-link i { font-size: 0.65rem; }
+        .admin-link:hover {
+            background: var(--accent);
+            color: #1E1E2F;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 14px rgba(241, 196, 15, 0.35);
+        }
+
         .dev-btn {
             display: inline-flex;
             align-items: center;
@@ -1037,7 +1072,6 @@
         @media (max-width: 768px) {
             .menu-btn { display: block; }
 
-            /* ===== MOBILE NAV MENU ===== */
             .nav-links {
                 position: fixed;
                 top: 60px;
@@ -1056,13 +1090,9 @@
                 overflow-y: auto;
             }
 
-            [data-theme="dark"] .nav-links {
-                background: #1F1D1A;
-            }
-
+            [data-theme="dark"] .nav-links { background: #1F1D1A; }
             .nav-links.active { left: 0; }
 
-            /* Base mobile link */
             .nav-links a {
                 display: block;
                 width: 100%;
@@ -1078,39 +1108,24 @@
                 transform: none;
                 box-shadow: none;
             }
+            [data-theme="dark"] .nav-links a { color: #F5EDE4; }
 
-            [data-theme="dark"] .nav-links a {
-                color: #F5EDE4;
-            }
-
-            /* Hover — soft tint only */
             .nav-links a:hover {
                 background: rgba(230, 126, 34, 0.12);
                 color: var(--secondary);
                 transform: none;
             }
-
             [data-theme="dark"] .nav-links a:hover {
                 background: rgba(230, 126, 34, 0.18);
                 color: var(--secondary);
             }
-
-            /* Active page — solid orange pill */
             .nav-links a.active {
                 background: var(--secondary);
                 color: #FFFFFF;
                 box-shadow: 0 6px 16px rgba(230, 126, 34, 0.35);
             }
-
-            .nav-links a.active:hover {
-                background: var(--secondary);
-                color: #FFFFFF;
-            }
-
-            /* Hide any desktop underline pseudo-element */
-            .nav-links a::after {
-                display: none;
-            }
+            .nav-links a.active:hover { background: var(--secondary); color: #FFFFFF; }
+            .nav-links a::after { display: none; }
 
             .gallery-hero { padding: 4.5rem 1.2rem 1.5rem; min-height: 300px; }
             .gallery-hero-text h1 { font-size: 1.6rem; }
@@ -1133,6 +1148,7 @@
             .cta-band h2 { font-size: 1.4rem; }
             .footer-content { grid-template-columns: 1fr; gap: 1.5rem; }
             .footer-bottom { flex-direction: column; text-align: center; }
+            .footer-bottom-actions { justify-content: center; }
         }
 
         @media (max-width: 480px) {
@@ -1187,7 +1203,7 @@
         </div>
     </header>
 
-    <!-- ===== HERO - COMPACT EDITORIAL ===== -->
+    <!-- HERO -->
     <section class="gallery-hero">
         <div class="gallery-hero-inner">
             <div class="gallery-hero-text">
@@ -1203,7 +1219,7 @@
         </div>
     </section>
 
-    <!-- ===== GALLERY GRID ===== -->
+    <!-- GALLERY GRID -->
     <section class="section">
         <div class="section-title">
             <h2>Explore Our Work</h2>
@@ -1221,7 +1237,6 @@
         <!-- Masonry Grid -->
         <div class="gallery-masonry" id="galleryGrid">
 
-            <!-- Photo 1 - big -->
             <div class="gallery-tile big animate-on-scroll" data-cat="photo" onclick="openLightbox('photo2.jpg', 'Concert Photography', 'Live concert coverage', false)">
                 <img src="photo2.jpg" alt="Concert Photography">
                 <div class="tile-content">
@@ -1231,7 +1246,6 @@
                 </div>
             </div>
 
-            <!-- Photo 2 -->
             <div class="gallery-tile animate-on-scroll" data-cat="photo" onclick="openLightbox('photo3.jpg', 'Studio Session', 'Behind the scenes', false)">
                 <img src="photo3.jpg" alt="Studio Session">
                 <div class="tile-content">
@@ -1241,7 +1255,6 @@
                 </div>
             </div>
 
-            <!-- Photo 3 - tall -->
             <div class="gallery-tile tall animate-on-scroll" data-cat="photo" onclick="openLightbox('photo1.png', 'DJ Performance', 'Live at the event', false)">
                 <img src="photo1.png" alt="DJ Performance">
                 <div class="tile-content">
@@ -1251,7 +1264,6 @@
                 </div>
             </div>
 
-            <!-- Video 1 -->
             <div class="gallery-tile is-video animate-on-scroll" data-cat="video" onclick="openLightbox('', 'Music Video — MEDZA', 'Official music video production', true, 'https://www.youtube.com/embed/YYsZkwox8Ms')">
                 <img src="will.jpg" alt="Music Video">
                 <div class="tile-play"><i class="fas fa-play"></i></div>
@@ -1262,7 +1274,6 @@
                 </div>
             </div>
 
-            <!-- Photo 4 -->
             <div class="gallery-tile animate-on-scroll" data-cat="photo" onclick="openLightbox('will.jpg', 'Studio Life', 'Inside the studio', false)">
                 <img src="will.jpg" alt="Studio Life">
                 <div class="tile-content">
@@ -1272,7 +1283,6 @@
                 </div>
             </div>
 
-            <!-- Video 2 - wide -->
             <div class="gallery-tile is-video wide animate-on-scroll" data-cat="video" onclick="openLightbox('', 'Music Video — NIK THE PSALMIST', 'Cinematic visuals', true, 'https://www.youtube.com/embed/5N-CsLvwHfM')">
                 <img src="photo2.jpg" alt="Music Video">
                 <div class="tile-play"><i class="fas fa-play"></i></div>
@@ -1283,7 +1293,6 @@
                 </div>
             </div>
 
-            <!-- Live 1 -->
             <div class="gallery-tile is-video animate-on-scroll" data-cat="live" onclick="openLightbox('', 'Live Recording — HANNINGTONE', 'Gospel live session', true, 'https://www.youtube.com/embed/yT8FiDC5Z8w')">
                 <img src="photo3.jpg" alt="Live Recording">
                 <div class="tile-play"><i class="fab fa-youtube"></i></div>
@@ -1294,7 +1303,6 @@
                 </div>
             </div>
 
-            <!-- Photo 5 -->
             <div class="gallery-tile animate-on-scroll" data-cat="photo" onclick="openLightbox('photo1.png', 'Portrait Session', 'Studio portrait', false)">
                 <img src="photo1.png" alt="Portrait Session">
                 <div class="tile-content">
@@ -1304,7 +1312,6 @@
                 </div>
             </div>
 
-            <!-- Live 2 -->
             <div class="gallery-tile is-video animate-on-scroll" data-cat="live" onclick="openLightbox('', 'Live Recording — JANET OUDU', 'Live studio performance', true, 'https://www.youtube.com/embed/mtr8Gm7s1io')">
                 <img src="photo2.jpg" alt="Live Recording">
                 <div class="tile-play"><i class="fab fa-youtube"></i></div>
@@ -1315,7 +1322,6 @@
                 </div>
             </div>
 
-            <!-- Video 3 - tall -->
             <div class="gallery-tile is-video tall animate-on-scroll" data-cat="video" onclick="openLightbox('', 'Music Video — ARROWBOY', 'High energy visuals', true, 'https://www.youtube.com/embed/FY8DJOxmgH0')">
                 <img src="photo3.jpg" alt="Music Video">
                 <div class="tile-play"><i class="fas fa-play"></i></div>
@@ -1326,7 +1332,6 @@
                 </div>
             </div>
 
-            <!-- Photo 6 -->
             <div class="gallery-tile animate-on-scroll" data-cat="photo" onclick="openLightbox('will.jpg', 'Behind the Scenes', 'Studio environment', false)">
                 <img src="will.jpg" alt="Behind the Scenes">
                 <div class="tile-content">
@@ -1336,7 +1341,6 @@
                 </div>
             </div>
 
-            <!-- Live 3 -->
             <div class="gallery-tile is-video animate-on-scroll" data-cat="live" onclick="openLightbox('', 'Live Recording — MASAUTI', 'Live session', true, 'https://www.youtube.com/embed/lDctT0kJgis')">
                 <img src="photo1.png" alt="Live Recording">
                 <div class="tile-play"><i class="fab fa-youtube"></i></div>
@@ -1347,7 +1351,6 @@
                 </div>
             </div>
 
-            <!-- Video 4 -->
             <div class="gallery-tile is-video animate-on-scroll" data-cat="video" onclick="openLightbox('', 'Wedding Film', 'Cinematic wedding coverage', true, 'https://www.youtube.com/embed/YYsZkwox8Ms')">
                 <img src="photo2.jpg" alt="Wedding Film">
                 <div class="tile-play"><i class="fas fa-play"></i></div>
@@ -1361,7 +1364,7 @@
         </div>
     </section>
 
-    <!-- ===== LIVE RECORDINGS BAND ===== -->
+    <!-- LIVE RECORDINGS BAND -->
     <section class="live-band animate-on-scroll">
         <div class="section-title">
             <h2>Live Recordings</h2>
@@ -1425,7 +1428,7 @@
         </div>
     </section>
 
-    <!-- ===== CTA ===== -->
+    <!-- CTA -->
     <section class="cta-band animate-on-scroll">
         <div class="cta-band-inner">
             <i class="fas fa-camera-retro cta-icon"></i>
@@ -1438,7 +1441,7 @@
         </div>
     </section>
 
-    <!-- ===== LIGHTBOX MODAL ===== -->
+    <!-- LIGHTBOX MODAL -->
     <div class="lightbox" id="lightbox">
         <div class="lightbox-content">
             <button class="lightbox-close" id="lightboxClose"><i class="fas fa-times"></i></button>
@@ -1460,7 +1463,7 @@
             <div class="footer-brand">
                 <div class="logo">
                     <i class="fas fa-headphones"></i>
-                    <span>Williams Records</span>
+                    <span>Williams Records Af</span>
                 </div>
                 <p>Creating exceptional audio and visual experiences that inspire and captivate audiences worldwide.</p>
                 <div class="footer-social">
@@ -1475,8 +1478,9 @@
                 <h4>Quick Links</h4>
                 <ul>
                     <li><a href="index.html"><i class="fas fa-chevron-right"></i> Home</a></li>
-                    <li><a href="about.html"><i class="fas fa-chevron-right"></i> About Us</a></li>
+                    <!-- <li><a href="about.html"><i class="fas fa-chevron-right"></i> About Us</a></li> -->
                     <li><a href="services.html"><i class="fas fa-chevron-right"></i> Services</a></li>
+                    <li><a href="shop.html"><i class="fas fa-chevron-right"></i> Shop</a></li>
                     <li><a href="contact.html"><i class="fas fa-chevron-right"></i> Contact</a></li>
                 </ul>
             </div>
@@ -1514,9 +1518,15 @@
 
         <div class="footer-bottom">
             <p>&copy; 2025 Williams Records. All Rights Reserved.</p>
-            <a href="https://jonathanbosimwenda28.netlify.app/" target="_blank" class="dev-btn">
-                <i class="fas fa-code"></i> Developed by JO
-            </a>
+            <div class="footer-bottom-actions">
+                <a href="admin.html" class="admin-link">
+                    <i class="fas fa-lock"></i>
+                    <!-- <span>Admin</span> -->
+                </a>
+                <a href="https://jonathanbosimwenda28.netlify.app/" target="_blank" class="dev-btn">
+                    <i class="fas fa-code"></i> Jo_Dev
+                </a>
+            </div>
         </div>
     </footer>
 
@@ -1607,7 +1617,6 @@
         const lightboxPrev = document.getElementById('lightboxPrev');
         const lightboxNext = document.getElementById('lightboxNext');
 
-        // Build a list of currently visible tiles for prev/next navigation
         let visibleTiles = [];
         let currentIndex = 0;
 
@@ -1665,7 +1674,6 @@
             const isVideo = tile.classList.contains('is-video');
             const src = tile.querySelector('img')?.getAttribute('src') || '';
             const onclick = tile.getAttribute('onclick') || '';
-            // Extract embed URL from onclick
             const match = onclick.match(/'([^']*youtube[^']*)'/);
             const embedUrl = match ? match[1] : '';
             renderLightbox(src, title, subtitle, isVideo, embedUrl);

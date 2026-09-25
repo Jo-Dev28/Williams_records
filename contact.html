@@ -200,7 +200,7 @@
             100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
         }
 
-        /* ===== HERO - COMPACT EDITORIAL ===== */
+        /* HERO */
         .contact-hero {
             padding: 5rem 1.5rem 2rem;
             margin-top: 1px;
@@ -394,7 +394,7 @@
             color: white;
         }
 
-        /* ===== QUICK CONTACT CARDS ===== */
+        /* QUICK CONTACT CARDS */
         .quick-cards {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -477,7 +477,7 @@
             gap: 0.55rem;
         }
 
-        /* ===== MAIN CONTACT BLOCK ===== */
+        /* MAIN CONTACT BLOCK */
         .contact-main {
             display: grid;
             grid-template-columns: 1fr 1.3fr;
@@ -647,7 +647,7 @@
             border-color: var(--accent);
         }
 
-        /* ===== FORM PANEL ===== */
+        /* FORM PANEL */
         .contact-form-panel {
             background: var(--card-bg);
             border-radius: var(--border-radius);
@@ -745,7 +745,7 @@
             gap: 0.5rem;
         }
 
-        /* ===== MAP ===== */
+        /* MAP */
         .map-wrap {
             margin-top: 2rem;
             border-radius: var(--border-radius);
@@ -761,7 +761,7 @@
             display: block;
         }
 
-        /* ===== QUICK ACTIONS BAND ===== */
+        /* QUICK ACTIONS BAND */
         .quick-actions {
             background: linear-gradient(135deg, #E67E22 0%, #D35400 100%);
             color: #FFF9F0;
@@ -842,7 +842,7 @@
             border-color: var(--accent);
         }
 
-        /* ===== FOOTER ===== */
+        /* FOOTER */
         footer {
             background: var(--dark);
             color: #F5EDE4;
@@ -877,7 +877,12 @@
             gap: 8px;
         }
 
-        .footer-brand .logo i { color: var(--secondary); font-size: 1.5rem; }
+        .footer-brand .logo i {
+            color: var(--secondary);
+            font-size: 1.5rem;
+            background: none;
+            -webkit-text-fill-color: var(--secondary);
+        }
         .footer-brand .logo span {
             background: linear-gradient(135deg, var(--secondary), var(--accent));
             -webkit-background-clip: text;
@@ -897,6 +902,7 @@
             transition: var(--transition);
             font-size: 0.85rem;
             border: 1px solid rgba(255, 255, 255, 0.08);
+            text-decoration: none;
         }
         .footer-social a:hover {
             background: var(--secondary);
@@ -967,6 +973,35 @@
 
         .footer-bottom p { font-size: 0.75rem; opacity: 0.6; }
 
+        .footer-bottom-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+        }
+
+        .admin-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(241, 196, 15, 0.1);
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 0.3rem 0.8rem;
+            border-radius: 30px;
+            border: 1px solid rgba(241, 196, 15, 0.3);
+            transition: var(--transition);
+        }
+        .admin-link i { font-size: 0.65rem; }
+        .admin-link:hover {
+            background: var(--accent);
+            color: #1E1E2F;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 14px rgba(241, 196, 15, 0.35);
+        }
+
         .dev-btn {
             display: inline-flex;
             align-items: center;
@@ -1014,7 +1049,6 @@
         @media (max-width: 768px) {
             .menu-btn { display: block; }
 
-            /* ===== MOBILE NAV MENU ===== */
             .nav-links {
                 position: fixed;
                 top: 60px;
@@ -1033,13 +1067,9 @@
                 overflow-y: auto;
             }
 
-            [data-theme="dark"] .nav-links {
-                background: #1F1D1A;
-            }
-
+            [data-theme="dark"] .nav-links { background: #1F1D1A; }
             .nav-links.active { left: 0; }
 
-            /* Base mobile link */
             .nav-links a {
                 display: block;
                 width: 100%;
@@ -1055,39 +1085,24 @@
                 transform: none;
                 box-shadow: none;
             }
+            [data-theme="dark"] .nav-links a { color: #F5EDE4; }
 
-            [data-theme="dark"] .nav-links a {
-                color: #F5EDE4;
-            }
-
-            /* Hover — soft tint only */
             .nav-links a:hover {
                 background: rgba(230, 126, 34, 0.12);
                 color: var(--secondary);
                 transform: none;
             }
-
             [data-theme="dark"] .nav-links a:hover {
                 background: rgba(230, 126, 34, 0.18);
                 color: var(--secondary);
             }
-
-            /* Active page — solid orange pill */
             .nav-links a.active {
                 background: var(--secondary);
                 color: #FFFFFF;
                 box-shadow: 0 6px 16px rgba(230, 126, 34, 0.35);
             }
-
-            .nav-links a.active:hover {
-                background: var(--secondary);
-                color: #FFFFFF;
-            }
-
-            /* Hide any desktop underline pseudo-element */
-            .nav-links a::after {
-                display: none;
-            }
+            .nav-links a.active:hover { background: var(--secondary); color: #FFFFFF; }
+            .nav-links a::after { display: none; }
 
             .contact-hero { padding: 4.5rem 1.2rem 1.5rem; min-height: 300px; }
             .contact-hero-text h1 { font-size: 1.6rem; }
@@ -1109,6 +1124,7 @@
 
             .footer-content { grid-template-columns: 1fr; gap: 1.5rem; }
             .footer-bottom { flex-direction: column; text-align: center; }
+            .footer-bottom-actions { justify-content: center; }
         }
 
         @media (max-width: 480px) {
@@ -1158,7 +1174,7 @@
         </div>
     </header>
 
-    <!-- ===== HERO - COMPACT EDITORIAL ===== -->
+    <!-- HERO -->
     <section class="contact-hero">
         <div class="contact-hero-inner">
             <div class="contact-hero-text">
@@ -1174,7 +1190,7 @@
         </div>
     </section>
 
-    <!-- ===== QUICK CONTACT CARDS ===== -->
+    <!-- QUICK CONTACT CARDS -->
     <section class="section">
         <div class="section-title">
             <h2>Reach Us Anytime</h2>
@@ -1208,10 +1224,9 @@
         </div>
     </section>
 
-    <!-- ===== MAIN CONTACT BLOCK ===== -->
+    <!-- MAIN CONTACT BLOCK -->
     <section class="section">
         <div class="contact-main">
-            <!-- Left: Info Panel -->
             <div class="contact-info-panel animate-on-scroll">
                 <div class="contact-info-panel-inner">
                     <span class="eyebrow">Get In Touch</span>
@@ -1267,7 +1282,6 @@
                 </div>
             </div>
 
-            <!-- Right: Form Panel -->
             <div class="contact-form-panel animate-on-scroll">
                 <h3>Send Us a Message</h3>
                 <p>Fill out the form below and we'll get back to you within 24 hours.</p>
@@ -1344,7 +1358,6 @@
             </div>
         </div>
 
-        <!-- Map -->
         <div class="map-wrap animate-on-scroll" id="map">
             <iframe
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.85434737326!2d36.821214274992!3d-1.262735435615559!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x182f173c4a5dffff%3A0x5c5c5b5b5b5b5b5b!2sBridge%20International%20Academy!5e0!3m2!1sen!2ske!4v1234567890"
@@ -1355,7 +1368,7 @@
         </div>
     </section>
 
-    <!-- ===== QUICK ACTIONS BAND ===== -->
+    <!-- QUICK ACTIONS BAND -->
     <section class="quick-actions animate-on-scroll">
         <div class="quick-actions-inner">
             <h2>Need a Quick Response?</h2>
@@ -1387,7 +1400,7 @@
             <div class="footer-brand">
                 <div class="logo">
                     <i class="fas fa-headphones"></i>
-                    <span>Williams Records</span>
+                    <span>Williams Records Af</span>
                 </div>
                 <p>Creating exceptional audio and visual experiences that inspire and captivate audiences worldwide.</p>
                 <div class="footer-social">
@@ -1404,7 +1417,8 @@
                     <li><a href="index.html"><i class="fas fa-chevron-right"></i> Home</a></li>
                     <li><a href="about.html"><i class="fas fa-chevron-right"></i> About Us</a></li>
                     <li><a href="services.html"><i class="fas fa-chevron-right"></i> Services</a></li>
-                    <li><a href="contact.html"><i class="fas fa-chevron-right"></i> Contact</a></li>
+                    <li><a href="shop.html"><i class="fas fa-chevron-right"></i> Shop</a></li>
+                    <!-- <li><a href="contact.html"><i class="fas fa-chevron-right"></i> Contact</a></li> -->
                 </ul>
             </div>
 
@@ -1441,9 +1455,15 @@
 
         <div class="footer-bottom">
             <p>&copy; 2025 Williams Records. All Rights Reserved.</p>
-            <a href="https://jonathanbosimwenda28.netlify.app/" target="_blank" class="dev-btn">
-                <i class="fas fa-code"></i> Developed by JO
-            </a>
+            <div class="footer-bottom-actions">
+                <a href="admin.html" class="admin-link">
+                    <i class="fas fa-lock"></i>
+                    <!-- <span>Admin</span> -->
+                </a>
+                <a href="https://jonathanbosimwenda28.netlify.app/" target="_blank" class="dev-btn">
+                    <i class="fas fa-code"></i> Jo_Dev
+                </a>
+            </div>
         </div>
     </footer>
 

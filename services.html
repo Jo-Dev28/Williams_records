@@ -968,6 +968,8 @@
         .footer-brand .logo i {
             color: var(--secondary);
             font-size: 1.5rem;
+            background: none;
+            -webkit-text-fill-color: var(--secondary);
         }
 
         .footer-brand .logo span {
@@ -1000,6 +1002,7 @@
             transition: var(--transition);
             font-size: 0.85rem;
             border: 1px solid rgba(255, 255, 255, 0.08);
+            text-decoration: none;
         }
 
         .footer-social a:hover {
@@ -1092,6 +1095,35 @@
         .footer-bottom p {
             font-size: 0.75rem;
             opacity: 0.6;
+        }
+
+        .footer-bottom-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+        }
+
+        .admin-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(241, 196, 15, 0.1);
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 0.3rem 0.8rem;
+            border-radius: 30px;
+            border: 1px solid rgba(241, 196, 15, 0.3);
+            transition: var(--transition);
+        }
+        .admin-link i { font-size: 0.65rem; }
+        .admin-link:hover {
+            background: var(--accent);
+            color: #1E1E2F;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 14px rgba(241, 196, 15, 0.35);
         }
 
         .dev-btn {
@@ -1248,7 +1280,6 @@
         @media (max-width: 768px) {
             .menu-btn { display: block; }
 
-            /* ===== MOBILE NAV MENU ===== */
             .nav-links {
                 position: fixed;
                 top: 60px;
@@ -1273,7 +1304,6 @@
 
             .nav-links.active { left: 0; }
 
-            /* Base mobile link */
             .nav-links a {
                 display: block;
                 width: 100%;
@@ -1294,7 +1324,6 @@
                 color: #F5EDE4;
             }
 
-            /* Hover — soft tint only */
             .nav-links a:hover {
                 background: rgba(230, 126, 34, 0.12);
                 color: var(--secondary);
@@ -1306,7 +1335,6 @@
                 color: var(--secondary);
             }
 
-            /* Active page — solid orange pill */
             .nav-links a.active {
                 background: var(--secondary);
                 color: #FFFFFF;
@@ -1318,7 +1346,6 @@
                 color: #FFFFFF;
             }
 
-            /* Hide any desktop underline pseudo-element */
             .nav-links a::after {
                 display: none;
             }
@@ -1346,6 +1373,7 @@
 
             .footer-content { grid-template-columns: 1fr; gap: 1.5rem; }
             .footer-bottom { flex-direction: column; text-align: center; }
+            .footer-bottom-actions { justify-content: center; }
         }
 
         @media (max-width: 480px) {
@@ -1674,7 +1702,7 @@
             <div class="footer-brand">
                 <div class="logo">
                     <i class="fas fa-headphones"></i>
-                    <span>Williams Records</span>
+                    <span>Williams Records Af</span>
                 </div>
                 <p>Creating exceptional audio and visual experiences that inspire and captivate audiences worldwide.</p>
                 <div class="footer-social">
@@ -1690,7 +1718,8 @@
                 <ul>
                     <li><a href="index.html"><i class="fas fa-chevron-right"></i> Home</a></li>
                     <li><a href="about.html"><i class="fas fa-chevron-right"></i> About Us</a></li>
-                    <li><a href="services.html"><i class="fas fa-chevron-right"></i> Services</a></li>
+                    <!-- <li><a href="services.html"><i class="fas fa-chevron-right"></i> Services</a></li> -->
+                    <li><a href="shop.html"><i class="fas fa-chevron-right"></i> Shop</a></li>
                     <li><a href="contact.html"><i class="fas fa-chevron-right"></i> Contact</a></li>
                 </ul>
             </div>
@@ -1728,9 +1757,15 @@
 
         <div class="footer-bottom">
             <p>&copy; 2025 Williams Records. All Rights Reserved.</p>
-            <a href="https://jonathanbosimwenda28.netlify.app/" target="_blank" class="dev-btn">
-                <i class="fas fa-code"></i> Developed by JO
-            </a>
+            <div class="footer-bottom-actions">
+                <a href="admin.html" class="admin-link">
+                    <i class="fas fa-lock"></i>
+                    <!-- <span>Admin</span> -->
+                </a>
+                <a href="https://jonathanbosimwenda28.netlify.app/" target="_blank" class="dev-btn">
+                    <i class="fas fa-code"></i>Jo_Dev
+                </a>
+            </div>
         </div>
     </footer>
 
